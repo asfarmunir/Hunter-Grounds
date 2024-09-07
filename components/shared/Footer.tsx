@@ -21,8 +21,8 @@ const socials = [
 ];
 const Footer = () => {
   return (
-    <div className=" w-full flex items-center justify-between px-3  md:pl-10 2xl:pl-16 md:pr-0 h-[30rem] 2xl:h-[34rem] mt-16  overflow-hidden">
-      <div className="flex gap-10">
+    <div className=" w-full flex items-center justify-between px-6 pb-12  md:pl-10 2xl:pl-16 md:pr-0 md:h-[30rem] 2xl:h-[34rem] mt-16  overflow-hidden">
+      <div className="flex flex-col md:flex-row gap-10">
         <div className="flex flex-col gap-2 ">
           <h2 className="text-2xl 2xl:text-4xl font-black">
             Let's Keep in Touch
@@ -51,7 +51,7 @@ const Footer = () => {
             ))}
           </div>
           <div className="flex items-center gap-3 my-2">
-            <div className="flex items-center gap-3 rounded-2xl bg-primary-50 px-6 py-3">
+            <div className="flex items-center gap-3 rounded-2xl bg-primary-50 px-3.5 sm:px-6 py-3">
               <Image
                 src={"/images/apple.svg"}
                 width={30}
@@ -60,10 +60,12 @@ const Footer = () => {
               />
               <div className="flex flex-col ">
                 <span className="text-xs font-thin">Download on the</span>
-                <p className="2xl:text-lg font-semibold">App Store</p>
+                <p className=" text-sm md:text-base 2xl:text-lg font-semibold">
+                  App Store
+                </p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-2xl bg-primary-50 px-6 py-3">
+            <div className="flex items-center gap-3 rounded-2xl bg-primary-50 px-3.5 sm:px-6 py-3">
               <Image
                 src={"/images/play.svg"}
                 width={30}
@@ -72,7 +74,9 @@ const Footer = () => {
               />
               <div className="flex flex-col ">
                 <span className="text-xs font-thin">Get It on</span>
-                <p className="2xl:text-lg font-semibold">Play Store</p>
+                <p className=" text-sm md:text-base 2xl:text-lg font-semibold">
+                  Play Store
+                </p>
               </div>
             </div>
           </div>
@@ -117,7 +121,7 @@ const Footer = () => {
           </p>
         </div>
       </div>
-      <div className=" w-fit h-full">
+      <div className=" hidden md:block w-fit h-full">
         <Image
           src={"/images/footerBg.svg"}
           alt="bg"

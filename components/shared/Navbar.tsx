@@ -81,7 +81,7 @@ const dropdownItems = [
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <nav className=" w-full bg-primary  rounded-full px-3 pl-10 2xl:pl-12 2xl:px-5 py-3.5 flex items-center justify-between">
+    <nav className=" w-full bg-primary  rounded-full px-3 md:pl-10 2xl:pl-12 2xl:px-5 py-3.5 flex items-center justify-between">
       <Image
         src="/images/logo.svg"
         alt="Logo"
@@ -130,7 +130,7 @@ const Navbar = () => {
           </DropdownMenuContent>
         </DropdownMenu>{" "}
       </div> */}
-      <div className=" bg-[#2A2A2A] px-4 py-2 flex items-center gap-2 rounded-lg">
+      <div className=" bg-[#2A2A2A] px-4 py-2 hidden md:flex items-center gap-2 rounded-lg">
         <button className="inline-flex items-center gap-2 text-xs 2xl:text-sm border-r pr-2.5 border-gray-500">
           <Image
             src={"/images/calendar.svg"}
@@ -151,7 +151,7 @@ const Navbar = () => {
 
         <IoMdSearch className=" bg-gradient-to-b from-[#FF9900] to-[#10111080] px-1 ml-3 rounded-md w-6 2xl:w-7 h-6 2xl:h-7" />
       </div>
-      <div className="flex items-center gap-4">
+      <div className=" hidden md:flex items-center gap-4">
         {navlinks.map((link, index) => (
           <Link
             key={index}

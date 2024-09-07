@@ -49,15 +49,17 @@ const reportTabs = [
   },
 ];
 const page = () => {
-  const [tab, setTab] = React.useState("general-settings");
+  const [tab, setTab] = React.useState("emails");
 
   const handleTab = (tab: string) => {
     setTab(tab);
   };
 
   return (
-    <div className=" w-full px-7 mt-7 2xl-mt-8 overflow-hidden ">
-      <p className=" font-thin text-xs 2xl:text-sm">User Management</p>
+    <div className=" w-full px-7 mt-7 2xl-mt-8 md:px-20 overflow-hidden oyo ">
+      <p className=" font-thin mb-2 text-primary-50 2xl:text-lg">
+        User Management
+      </p>
       <h1 className=" text-4xl 2xl:text-5xl font-bold">Settings</h1>
       <div className="flex gap-6 my-6 w-full flex-col">
         <div className="flex  justify-center md:justify-start  max-w-full pb-4 overflow-auto  items-center gap-1.5">
@@ -68,26 +70,26 @@ const page = () => {
               className={` capitalize text-xs text-nowrap font-semibold p-2.5 2xl:p-3 px-5 
                 tracking-wide 2xl:px-7 text-center rounded-full ${
                   tab === t.tab
-                    ? "bg-black dark:bg-[#194867] text-white"
-                    : " bg-slate-50 dark:bg-slate-900  text-primary"
+                    ? "bg-[#FF990033] text-primary-50"
+                    : " bg-[#372F2F99]  text-white"
                 }`}
             >
               {t.name}
             </button>
           ))}
-          <CustomerVerification />
+          {/* <CustomerVerification /> */}
         </div>
       </div>
 
       {
         {
-          "general-settings": <GeneralSettings />,
-          plans: <Plans />,
+          // "general-settings": <GeneralSettings />,
+          // plans: <Plans />,
           emails: <Emails />,
-          contracts: <Contracts />,
-          downloads: <Downloads />,
-          platforms: <Platforms />,
-          "system-management": <SystemManagement />,
+          // contracts: <Contracts />,
+          // downloads: <Downloads />,
+          // platforms: <Platforms />,
+          // "system-management": <SystemManagement />,
         }[tab]
       }
     </div>
@@ -98,10 +100,7 @@ export default page;
 
 const GeneralSettings = () => {
   return (
-    <div
-      className=" w-full rounded-3xl bg-[#F2F2F2] dark:dark:bg-slate-900
-dark:bg-slate-900 mt-6 2xl:mt-8"
-    >
+    <div className=" w-full rounded-3xl bg-primary-100 oyo mt-6 2xl:mt-8">
       <div className=" w-full p-2.5 2xl:p-3.5 flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
         <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-1.5">
           <h3 className="font-semibold pl-4 py-2.5">General Settings</h3>

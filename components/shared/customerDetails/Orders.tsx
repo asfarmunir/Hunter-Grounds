@@ -43,10 +43,7 @@ const PayoutByPeriod = () => {
   const [tab, setTab] = React.useState("all");
 
   return (
-    <div
-      className=" w-full rounded-3xl bg-[#F2F2F2] dark:dark:bg-slate-900
-dark:bg-slate-900 mt-6 2xl:mt-8"
-    >
+    <div className=" w-full rounded-3xl  bg-primary-100 mt-6 2xl:mt-8">
       <div className=" w-full p-2.5 2xl:p-4 flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
         <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-4">
           <h3 className="font-semibold pl-4">Orders</h3>
@@ -57,8 +54,8 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
                 className={` capitalize text-xs text-nowrap font-semibold p-2.5 2xl:p-3 px-5 
                 tracking-wide 2xl:px-7 text-center rounded-full ${
                   tab === t.tab
-                    ? "bg-black dark:bg-[#194867] text-white"
-                    : " bg-slate-50 dark:bg-slate-900  text-primary"
+                    ? "bg-[#FF990033] text-primary-50"
+                    : " bg-[#372F2F99]  text-white"
                 }`}
               >
                 {t.name}
@@ -67,12 +64,13 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
           </div>
         </div>
         <div className="flex items-center flex-wrap md:flex-nowrap gap-1.5">
-          <div className=" bg-white dark:bg-slate-950 inline-flex  w-full md:w-fit items-center px-2 rounded-full">
+          <div className=" bg-primary-200 border border-primary-50 inline-flex  w-full md:w-fit items-center px-4 rounded-full">
             <LuSearch className="w-4 h-4 text-[#848BAC] " />
             <Input
               className=" 
                 text-[#848BAC]
                 border-none
+                bg-transparent
                 focus:outline-none
                 w-full
                 md:w-fit
@@ -84,7 +82,7 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
               placeholder={"search..."}
             />
           </div>
-          <button className="bg-white    dark:bg-slate-950 p-3 inline-flex items-center font-semibold gap-1 capitalize rounded-full text-xs ">
+          <button className="bg-primary-200 border border-primary-50 p-3 inline-flex items-center font-semibold gap-1 capitalize rounded-full text-xs ">
             export
             <Image
               src="/export.svg"
@@ -94,7 +92,7 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
               className=" dark:invert"
             />
           </button>
-          <button className="bg-white dark:bg-slate-950 p-3 capitalize rounded-full text-xs font-semibold ">
+          <button className="bg-primary-200 border border-primary-50 p-3 capitalize rounded-full text-xs font-semibold ">
             toggle colomn
           </button>
         </div>
@@ -103,29 +101,29 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
         <Table className=" bg-background">
           <TableHeader className=" ">
             <TableRow className=" border-none">
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] rounded-tl-full rounded-bl-full ">
+              <TableHead className="text-sm bg-[#372F2F99]/50  rounded-tl-full rounded-bl-full ">
                 order ID
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-[#372F2F99]/50  capitalize">
                 Variation ID
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-[#372F2F99]/50  capitalize">
                 Program
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-[#372F2F99]/50  capitalize">
                 status
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-[#372F2F99]/50  capitalize">
                 accounts
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-[#372F2F99]/50  capitalize">
                 Purchase Price
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-[#372F2F99]/50  capitalize">
                 date
               </TableHead>
 
-              <TableHead className="text-sm bg-[#F4FAFF] rounded-tr-full rounded-br-full dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-[#372F2F99]/50 rounded-tr-full rounded-br-full  capitalize">
                 Product ID
               </TableHead>
             </TableRow>
@@ -133,30 +131,30 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
           <TableBody>
             {Array.from({ length: 6 }).map((_, i) => (
               <TableRow key={i} className=" border-none">
-                <TableCell className=" text-xs  text-primary rounded-tl-full rounded-bl-full  bg-[#FBFBFB] dark:bg-slate-950 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white rounded-tl-full rounded-bl-full  bg-[#372F2F99]   2xl:text-sm font-semibold">
                   1
                 </TableCell>
 
-                <TableCell className=" text-xs  text-primary  bg-[#FBFBFB] dark:bg-slate-950 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white  bg-[#372F2F99]   2xl:text-sm font-semibold">
                   1
                 </TableCell>
-                <TableCell className=" text-xs  text-primary  bg-[#FBFBFB] dark:bg-slate-950 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white  bg-[#372F2F99]   2xl:text-sm font-semibold">
                   1
                 </TableCell>
-                <TableCell className=" text-xs  text-primary  bg-[#FBFBFB] dark:bg-slate-950 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white  bg-[#372F2F99]   2xl:text-sm font-semibold">
                   1
                 </TableCell>
-                <TableCell className=" text-xs  text-primary  bg-[#FBFBFB] dark:bg-slate-950 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white  bg-[#372F2F99]   2xl:text-sm font-semibold">
                   1
                 </TableCell>
-                <TableCell className=" text-xs  text-primary  bg-[#FBFBFB] dark:bg-slate-950 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white  bg-[#372F2F99]   2xl:text-sm font-semibold">
                   1
                 </TableCell>
-                <TableCell className=" text-xs  text-primary  bg-[#FBFBFB] dark:bg-slate-950 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white  bg-[#372F2F99]   2xl:text-sm font-semibold">
                   1
                 </TableCell>
 
-                <TableCell className=" text-xs   rounded-tr-full rounded-br-full text-primary  bg-[#FBFBFB] dark:bg-slate-950 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs   rounded-tr-full rounded-br-full text-white  bg-[#372F2F99]   2xl:text-sm font-semibold">
                   1
                 </TableCell>
               </TableRow>
@@ -164,15 +162,15 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between bg-background py-4  px-6">
+      <div className="flex items-center justify-between rounded-full py-4 bg-primary-100  px-6">
         <p className="  text-xs font-semibold 2xl:text-sm">1-10 of 195 tour</p>
         <div className="flex items-center gap-3 pr-1">
-          <BsArrowLeftCircle className="w-4 h-4 2xl:w-6 2xl:h-6 text-slate-400" />
+          <BsArrowLeftCircle className="w-4 h-4 2xl:w-6 2xl:h-6 text-primary-50" />
           <p className=" font-semibold text-sm 2xl:text-base">1</p>
           <p className=" text-sm 2xl:text-base">2</p>
           <p className=" text-sm 2xl:text-base">...</p>
           <p className=" text-sm 2xl:text-base">8</p>
-          <BsArrowRightCircle className="w-4 2xl:w-6 2xl:h-6 h-4" />
+          <BsArrowRightCircle className="w-4 2xl:w-6 2xl:h-6 h-4 text-primary-50" />
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ const page = () => {
           </p>
           <h1 className=" text-4xl 2xl:text-5xl font-bold">Dashboard</h1>
         </div>
-        <div className=" inline-flex gap-2">
+        <div className=" hidden md:inline-flex gap-2">
           <button className=" border border-slate-600 rounded-full px-3 py-2 inline-flex items-center gap-2">
             <Image
               src="/images/Setting.svg"

@@ -25,17 +25,16 @@ import OrderDetails from "@/components/shared/modals/OrderDetails";
 
 const page = () => {
   return (
-    <div className=" w-full px-7 mt-7 2xl-mt-8">
-      <p className=" font-thin text-xs 2xl:text-sm">Sales Management</p>
+    <div className=" w-full px-7 md:px-20 oyo mt-7 2xl-mt-8">
+      <p className=" font-thin text-primary-50 mb-1 2xl:text-lg">
+        Sales Management
+      </p>
       <h1 className=" text-4xl 2xl:text-5xl font-bold">Orders</h1>
-      <div
-        className=" w-full rounded-3xl bg-[#F2F2F2] dark:dark:bg-slate-900
-dark:bg-slate-900 mt-6 2xl:mt-8"
-      >
+      <div className=" w-full rounded-3xl  bg-primary-100 mt-6 2xl:mt-8">
         <div className=" w-full p-2.5 2xl:p-3.5 flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
           <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-1.5">
             <DropdownMenu>
-              <DropdownMenuTrigger className=" bg-white dark:bg-slate-950   justify-center text-nowrap w-full md:w-fit  text-xs 2xl:text-sm px-3 md:px-4 py-3 font-semibold rounded-full inline-flex items-center gap-1.5">
+              <DropdownMenuTrigger className=" bg-[#FF990033] border border-primary-50 text-primary-50   justify-center text-nowrap w-full md:w-fit  text-xs 2xl:text-sm px-3 md:px-4 py-3 font-semibold rounded-full inline-flex items-center gap-1.5">
                 Filter Program Type
                 <IoChevronDownOutline className="w-3 h-3" />
               </DropdownMenuTrigger>
@@ -54,11 +53,12 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
             </DropdownMenu>{" "}
           </div>
           <div className="flex items-center flex-wrap gap-1.5">
-            <div className=" bg-white dark:bg-slate-950 inline-flex  w-full md:w-fit items-center px-2 rounded-full">
+            <div className=" bg-[#372f2f4b] inline-flex  w-full md:w-fit items-center px-2 rounded-xl border border-[#372f2f]">
               <LuSearch className="w-4 h-4 text-[#848BAC] " />
               <Input
                 className=" 
                 text-[#848BAC]
+                bg-transparent
                 border-none
                 focus:outline-none
                 w-full
@@ -88,69 +88,69 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
         </div>
         <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
           <Table className=" bg-background">
-            <TableHeader className=" ">
-              <TableRow className=" border-none">
-                <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] rounded-tl-full rounded-bl-full ">
+            <TableHeader className=" mb-1 ">
+              <TableRow className=" border-none py-3 ">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] rounded-tl-full rounded-bl-full ">
                   Order NR
                 </TableHead>
-                <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   customer
                 </TableHead>
-                <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   account
                 </TableHead>
-                <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   full name
                 </TableHead>
 
-                <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   program
                 </TableHead>
-                <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   product
                 </TableHead>
-                <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   status
                 </TableHead>
-                <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize rounded-tr-full rounded-br-full">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize rounded-tr-full rounded-br-full">
                   Purchase price
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="  ">
+            <TableBody className="   ">
               {Array.from({ length: 6 }).map((_, i) => (
                 <TableRow key={i} className=" border-none  ">
-                  <TableCell className=" text-xs  text-primary rounded-tl-full rounded-bl-full bg-[#FBFBFB] dark:bg-transparent border-none    2xl:text-sm font-semibold">
+                  <TableCell className=" text-xs  text-white rounded-tl-full rounded-bl-full bg-[#372f2fd4]  border-none    2xl:text-sm font-semibold">
                     <OrderDetails />
                   </TableCell>
 
-                  <TableCell className="bg-[#FBFBFB] dark:bg-transparent border-none  ">
-                    <p className=" bg-[#F2F962] dark:bg-yellow-400/60 text-primary  flex items-center w-fit justify-center px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold">
+                  <TableCell className="bg-[#372f2fd4]  border-none  ">
+                    <p className=" bg-[#16131399]  text-white  flex items-center w-fit justify-center px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold">
                       729733
                     </p>
                   </TableCell>
-                  <TableCell className=" bg-[#FBFBFB] dark:bg-transparent border-none  ">
-                    <p className=" bg-[#CCCEFD] dark:bg-[#cccefd79] text-primary flex items-center justify-start w-fit px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold">
+                  <TableCell className=" bg-[#372f2fd4]  border-none  ">
+                    <p className=" bg-[#00C88C1A] text-white flex items-center justify-start w-fit px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold">
                       C23645
                     </p>
                   </TableCell>
 
-                  <TableCell className=" text-xs  text-primary bg-[#FBFBFB] dark:bg-transparent border-none   2xl:text-sm font-semibold">
+                  <TableCell className=" text-xs  text-white bg-[#372f2fd4]  border-none   2xl:text-sm font-semibold">
                     Fatima Shehab
                   </TableCell>
-                  <TableCell className=" text-xs  text-primary bg-[#FBFBFB] dark:bg-transparent border-none   2xl:text-sm font-semibold">
+                  <TableCell className=" text-xs  text-white bg-[#372f2fd4]  border-none   2xl:text-sm font-semibold">
                     $10,000 Phase 1 - Prime
                   </TableCell>
 
-                  <TableCell className=" text-xs   text-primary bg-[#FBFBFB] dark:bg-transparent border-none 2xl:text-sm font-semibold">
+                  <TableCell className=" text-xs   text-white bg-[#372f2fd4]  border-none 2xl:text-sm font-semibold">
                     UWM challenges
                   </TableCell>
-                  <TableCell className="bg-[#FBFBFB] dark:bg-transparent border-none  ">
-                    <p className=" bg-[#80ED99] dark:bg-green-400/60 text-primary  flex items-center w-fit justify-center px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold">
+                  <TableCell className="bg-[#372f2fd4]  border-none  ">
+                    <p className=" bg-[#80ED99] dark:bg-green-400/60 text-white  flex items-center w-fit justify-center px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold">
                       Completed
                     </p>
                   </TableCell>
-                  <TableCell className=" text-xs  rounded-tr-full rounded-br-full  text-primary bg-[#FBFBFB] dark:bg-transparent border-none 2xl:text-sm font-semibold">
+                  <TableCell className=" text-xs  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-none 2xl:text-sm font-semibold">
                     $69.00
                   </TableCell>
                 </TableRow>
@@ -158,17 +158,17 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-between bg-background py-4  px-6">
+        <div className="flex items-center justify-between rounded-full py-4 bg-primary-100  px-6">
           <p className="  text-xs font-semibold 2xl:text-sm">
             1-10 of 195 tour
           </p>
           <div className="flex items-center gap-3 pr-1">
-            <BsArrowLeftCircle className="w-4 h-4 2xl:w-6 2xl:h-6 text-slate-400" />
+            <BsArrowLeftCircle className="w-4 h-4 2xl:w-6 2xl:h-6 text-primary-50" />
             <p className=" font-semibold text-sm 2xl:text-base">1</p>
             <p className=" text-sm 2xl:text-base">2</p>
             <p className=" text-sm 2xl:text-base">...</p>
             <p className=" text-sm 2xl:text-base">8</p>
-            <BsArrowRightCircle className="w-4 2xl:w-6 2xl:h-6 h-4" />
+            <BsArrowRightCircle className="w-4 2xl:w-6 2xl:h-6 h-4 text-primary-50" />
           </div>
         </div>
       </div>

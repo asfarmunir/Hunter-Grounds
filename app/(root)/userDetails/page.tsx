@@ -57,13 +57,13 @@ const page = () => {
   };
 
   return (
-    <div className=" w-full px-7 mt-7 2xl-mt-8 overflow-hidden ">
-      <p className=" font-thin text-xs 2xl:text-sm">Sales Management</p>
-      <h1 className=" text-4xl 2xl:text-5xl font-bold">Prop Accounts</h1>
+    <div className=" w-full px-7 md:px-20 mt-7 2xl-mt-8 oyo overflow-hidden ">
+      <p className=" font-thin mb-2 text-primary-50 2xl:text-xl">Account</p>
+      <h1 className=" text-4xl 2xl:text-5xl font-bold">Client Profile</h1>
       <div className="flex gap-6 my-6 w-full flex-col">
         <div className=" w-full flex flex-col-reverse md:flex-row gap-4">
           <div className="flex flex-col gap-4 w-full md:w-[75%]">
-            <div className=" w-full p-5 rounded-2xl flex items-center justify-between bg-slate-50 dark:bg-slate-900">
+            <div className=" w-full p-5 rounded-2xl flex items-center justify-between bg-primary-100">
               <div className="flex flex-col">
                 <p className=" font-semibold">Prop Accounts</p>
                 <p className="text-sm">
@@ -71,18 +71,18 @@ const page = () => {
                 </p>
               </div>
               <div className="flex text-xs md:text-base text-nowrap items-center flex-col md:flex-row gap-2.5">
-                <p className=" text-primary bg-[#CCCEFD] dark:bg-purple-400/30 p-2.5 font-semibold rounded-full px-5">
+                <p className=" text-green-600 bg-[#00C88C1A]  p-2.5 font-semibold rounded-full px-5">
                   343384
                 </p>
-                <p className=" text-primary bg-[#05BAFF]/20 p-2.5 text-center font-semibold rounded-full px-5">
+                <p className=" text-white border border-[#05BAFF]/20 p-2.5 text-center font-semibold rounded-full px-5">
                   Match Trader
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 rounded-2xl gap-4 bg-slate-50 dark:bg-slate-900">
-              <div className=" flex flex-col p-5 flex-grow bg-[#80ED99]/10 rounded-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 rounded-2xl gap-4 bg-primary-100/50">
+              <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
                 <Image
-                  src="/balance.png"
+                  src="/images/balance.svg"
                   width={50}
                   height={54}
                   alt="warning"
@@ -91,31 +91,31 @@ const page = () => {
                 <h2 className=" font-bold text-3xl 2xl:text-4xl">$202,304</h2>
                 <p className=" text-xs 2xl:text-sm">balance</p>
               </div>{" "}
-              <div className=" flex flex-col p-5 flex-grow bg-[#8CD3FF]/10 rounded-2xl">
+              <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
                 <Image
-                  src="/profit2.png"
+                  src="/images/equity.svg"
                   width={50}
                   height={54}
                   alt="warning"
                   className=" mb-9 2xl:mb-12"
                 />
                 <h2 className=" font-bold text-3xl 2xl:text-4xl">$9203</h2>
-                <p className=" text-xs 2xl:text-sm">Profit</p>
+                <p className=" text-xs 2xl:text-sm capitalize">Equity</p>
               </div>{" "}
-              <div className=" flex flex-col p-5 flex-grow bg-[#CCCEFD]/10 rounded-2xl">
+              <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
                 <Image
-                  src="/equity.png"
+                  src="/images/total.svg"
                   width={50}
                   height={54}
                   alt="warning"
                   className=" mb-9 2xl:mb-12"
                 />
                 <h2 className=" font-bold text-3xl 2xl:text-4xl">$202,304</h2>
-                <p className=" text-xs 2xl:text-sm capitalize">Equity</p>
+                <p className=" text-xs 2xl:text-sm">Profit</p>
               </div>{" "}
-              <div className=" flex flex-col p-5 flex-grow bg-[#CCCEFD]/10 rounded-2xl">
+              <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
                 <Image
-                  src="/withdraw.png"
+                  src="/images/withdraw.svg"
                   width={50}
                   height={54}
                   alt="warning"
@@ -126,9 +126,9 @@ const page = () => {
                   withdrawable profit
                 </p>
               </div>{" "}
-              <div className=" flex flex-col p-5 flex-grow bg-[#8CD3FF]/10 rounded-2xl">
+              <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
                 <Image
-                  src="/total.png"
+                  src="/images/total.svg"
                   width={50}
                   height={54}
                   alt="warning"
@@ -137,9 +137,9 @@ const page = () => {
                 <h2 className=" font-bold text-3xl 2xl:text-4xl">$0</h2>
                 <p className=" text-xs 2xl:text-sm capitalize">total payouts</p>
               </div>{" "}
-              <div className=" flex flex-col p-5 flex-grow bg-[#80ED99]/10 rounded-2xl">
+              <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
                 <Image
-                  src="/server.png"
+                  src="/images/server.svg"
                   width={50}
                   height={54}
                   alt="warning"
@@ -151,20 +151,20 @@ const page = () => {
                 <p className=" text-xs 2xl:text-sm capitalize">server</p>
               </div>{" "}
             </div>
-            <div className=" w-full p-5 rounded-2xl flex items-center justify-between bg-slate-50 dark:bg-slate-900">
+            <div className=" w-full p-5 rounded-2xl flex items-center justify-between bg-primary-100">
               <div className="flex flex-col">
-                <p className=" font-semibold">Notes</p>
-                <p className="text-sm">Add notes if necessary</p>
+                <p className=" font-semibold text-lg text-primary-50">Notes</p>
+                <p className="text-sm font-semibold">Add notes if necessary</p>
               </div>
               <div className="flex items-center gap-2.5">
-                <button className=" text-primary border-slate-400 p-2.5 font-semibold rounded-full px-5">
-                  Add Note
+                <button className=" border bg-gradient-to-b from-[#FF9900] to-[#FFE7A9] text-black font-bold rounded-full px-3 py-2 inline-flex items-center gap-2">
+                  Add Notes
                 </button>
               </div>
             </div>
           </div>
           <div className=" w-full md:w-[25%] flex flex-col gap-4">
-            <div className=" w-full p-5 2xl:py-10 gap-3 bg-slate-50 dark:bg-slate-900 rounded-2xl flex flex-col items-center justify-center">
+            <div className=" w-full p-5 2xl:py-10 gap-3 bg-primary-100 rounded-2xl flex flex-col items-center justify-center">
               <Image
                 src="/hero.png"
                 width={500}
@@ -172,20 +172,20 @@ const page = () => {
                 alt="warning"
                 className=" w-28 h-28 mb-4 2xl:w-36 2xl:h-36"
               />
-              <h3 className=" text-2xl text-center 2xl:text-3xl font-bold">
+              <h3 className=" text-2xl text-primary-50 text-center 2xl:text-3xl font-bold">
                 Khatia Jintcharadze
               </h3>
               <div className="flex items-center gap-2.5">
-                <p className=" text-primary bg-[#F2F962] dark:bg-yellow-400/20 p-2.5 font-semibold rounded-full px-5">
+                <p className=" text-white bg-[#F2F962]  dark:bg-yellow-400/20 p-2.5 font-semibold rounded-full px-5">
                   343384
                 </p>
-                <p className=" text-primary bg-[#80ED99]/20 p-2.5 font-semibold rounded-full px-5">
+                <p className=" text-green-500 bg-[#80ED99]/20 p-2.5 font-semibold rounded-full px-5">
                   Active
                 </p>
               </div>
             </div>
-            <div className=" w-full bg-slate-50 dark:bg-slate-900 p-6 flex rounded-2x; flex-col items-center">
-              <h3 className=" w-full bg-white dark:bg-slate-800 p-3 mb-5 rounded-2xl font-semibold text-center">
+            <div className=" w-full bg-primary-100 p-6 flex rounded-2x; flex-col items-center">
+              <h3 className=" w-full bg-[#372F2F33]  p-3 mb-5 rounded-full font-semibold text-center">
                 Detailed Information
               </h3>
               <div className="flex items-center justify-between w-full py-2 text-xs 2xl:text-sm border-b">
@@ -229,8 +229,8 @@ const page = () => {
               className={` capitalize text-xs text-nowrap font-semibold p-2.5 2xl:p-3 px-5 
                 tracking-wide 2xl:px-7 text-center rounded-full ${
                   tab === t.tab
-                    ? "bg-black dark:bg-[#194867] text-white"
-                    : " bg-slate-50 dark:bg-slate-900  text-primary"
+                    ? "bg-[#FF990033] text-primary-50"
+                    : " bg-[#372F2F99]  text-white"
                 }`}
             >
               {t.name}
@@ -239,27 +239,17 @@ const page = () => {
         </div>
       </div>
 
-      {/* <Details /> */}
-      {/* <Notes /> */}
-      {/* <AccountHistory /> */}
-      {/* <MetricHistory /> */}
-      {/* <TradeHistory /> */}
-      {/* <OpenTrades /> */}
-      {/* <CashHistory /> */}
-      {/* <IPLogs /> */}
-      {/* <EditLogs /> */}
-
       {
         {
           details: <Details />,
-          notes: <Notes />,
-          "account-history": <AccountHistory />,
-          "metric-history": <MetricHistory />,
-          "trade-history": <TradeHistory />,
-          "open-trades": <OpenTrades />,
-          "cash-history": <CashHistory />,
-          "ip-logs": <IPLogs />,
-          "edit-logs": <EditLogs />,
+          // notes: <Notes />,
+          // "account-history": <AccountHistory />,
+          // "metric-history": <MetricHistory />,
+          // "trade-history": <TradeHistory />,
+          // "open-trades": <OpenTrades />,
+          // "cash-history": <CashHistory />,
+          // "ip-logs": <IPLogs />,
+          // "edit-logs": <EditLogs />,
         }[tab]
       }
     </div>
