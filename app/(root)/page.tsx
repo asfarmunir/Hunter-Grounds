@@ -4,7 +4,7 @@ import React from "react";
 import AddWidget from "@/components/shared/modals/AddWidget";
 const page = () => {
   return (
-    <div className=" w-full px-5 md:px-20 mt-10 2xl-mt-12">
+    <div className=" w-full px-5 md:px-20 mt-10 2xl-mt-12 bg-primary ">
       <div className="flex items-center justify-between w-full">
         <div className="flex flex-col">
           <p className=" font-thin  mb-2 2xl:text-lg text-primary-50">
@@ -30,7 +30,7 @@ const page = () => {
       <div className=" w-full grid grid-cols-1 md:grid-cols-2 mb-10 lg:grid-cols-3 gap-4">
         <div className=" w-full rounded-3xl  p-3.5  mt-6 2xl:mt-8">
           <p className="  2xl:text-xl text-lg  mb-4 ">Revenue</p>
-          <div className=" w-full flex  flex-col  p-6 pb-7 gap-3.5 rounded-3xl">
+          <div className=" w-full flex bg-[#16131399]  flex-col  p-6 pb-7 gap-3.5 rounded-3xl">
             <div className=" w-full flex items-center justify-between">
               <div className="flex flex-col gap-1">
                 <p className="  2xl:text-lg font-thin">Total Sale</p>
@@ -40,7 +40,7 @@ const page = () => {
                 +1.5%
               </p>
             </div>
-            <div className=" w-full h-10 mb-4 rounded-full bg-[#372F2F99]">
+            <div className=" w-full h-7 mb-4 rounded-full bg-[#372F2F99]">
               <div className=" w-[60%] bg-[#FF9900]  rounded-full h-full"></div>
             </div>
             <div className=" w-full flex items-center justify-between">
@@ -54,14 +54,14 @@ const page = () => {
                 +1.5%
               </p>
             </div>
-            <div className=" w-full h-10 mb-4 rounded-full bg-[#372F2F99]">
+            <div className=" w-full h-7 mb-4 rounded-full bg-[#372F2F99]">
               <div className=" w-[40%] bg-[#FF9900]  rounded-full h-full"></div>
             </div>
           </div>
         </div>
-        <div className=" w-full rounded-3xl  p-3.5 mt-6 2xl:mt-8">
+        <div className=" w-full rounded-3xl   p-3.5 mt-6 2xl:mt-8">
           <p className="  2xl:text-xl text-lg  mb-4 ">Withdrawable Profit</p>
-          <div className=" w-full bg-[#16131399]  rounded-3xl p-6 mb-3 relative flex flex-col gap-3">
+          <div className=" w-full bg-[#16131399]  rounded-3xl p-6 mb-4 relative flex flex-col gap-3">
             <p className="2xl:text-lg font-semibold ">Total Sales</p>
             <h3 className=" text-2xl 2xl:text-3xl font-bold">$414,743.84</h3>
             <p className="text-xs 2xl:text-sm text-green-500 font-semibold ">

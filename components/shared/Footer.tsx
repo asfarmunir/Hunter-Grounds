@@ -21,8 +21,8 @@ const socials = [
 ];
 const Footer = () => {
   return (
-    <div className=" w-full flex items-center justify-between px-6 pb-12  md:pl-10 2xl:pl-16 md:pr-0 md:h-[30rem] 2xl:h-[34rem] mt-16  overflow-hidden">
-      <div className="flex flex-col md:flex-row gap-10">
+    <div className=" w-full flex items-center bg-primary  justify-between px-6 pb-12  md:pl-10 2xl:pl-16 md:pr-0 md:h-[30rem] 2xl:h-[34rem]  overflow-hidden">
+      <div className="flex flex-col md:flex-row gap-10 pt-36">
         <div className="flex flex-col gap-2 ">
           <h2 className="text-2xl 2xl:text-4xl font-black">
             Let's Keep in Touch
@@ -31,9 +31,13 @@ const Footer = () => {
             We will not clog up your email inbox and will write only in very
             important cases
           </p>
-          <div className="flex items-center border mb-4 border-slate-600 rounded-full w-fit pl-5">
-            <input type="text" placeholder="Enter your email" />
-            <button className=" bg-gradient-to-t from-[#FF9900] to-[#FFE7A9] rounded-full px-6 py-4 text-black font-semibold 2xl:text-lg">
+          <div className="flex items-center  border mb-4 border-slate-600 rounded-full w-fit pl-3 sm:pl-5">
+            <input
+              type="text"
+              placeholder="Enter your email"
+              className=" dark:bg-transparent"
+            />
+            <button className=" bg-gradient-to-t from-[#FF9900] to-[#FFE7A9] text-xs md:text-sm rounded-full px-6 py-4 text-black font-semibold 2xl:text-lg">
               Subscribe
             </button>
           </div>
@@ -54,13 +58,13 @@ const Footer = () => {
             <div className="flex items-center gap-3 rounded-2xl bg-primary-50 px-3.5 sm:px-6 py-3">
               <Image
                 src={"/images/apple.svg"}
-                width={30}
-                height={30}
+                width={27}
+                height={27}
                 alt="hehe"
               />
               <div className="flex flex-col ">
                 <span className="text-xs font-thin">Download on the</span>
-                <p className=" text-sm md:text-base 2xl:text-lg font-semibold">
+                <p className=" text-xs xs:text-sm md:text-base 2xl:text-lg font-semibold">
                   App Store
                 </p>
               </div>
@@ -68,14 +72,14 @@ const Footer = () => {
             <div className="flex items-center gap-3 rounded-2xl bg-primary-50 px-3.5 sm:px-6 py-3">
               <Image
                 src={"/images/play.svg"}
-                width={30}
-                height={30}
+                width={27}
+                height={27}
                 alt="hehe"
               />
               <div className="flex flex-col ">
                 <span className="text-xs font-thin">Get It on</span>
-                <p className=" text-sm md:text-base 2xl:text-lg font-semibold">
-                  Play Store
+                <p className=" text-xs xs:text-sm md:text-base 2xl:text-lg font-semibold">
+                  Google Play
                 </p>
               </div>
             </div>
@@ -97,7 +101,7 @@ const Footer = () => {
           <Link className=" 2xl:text-xl font-semibold" href={"/"}>
             Write to Us
           </Link>
-          <p className=" text-pretty inline-flex text-sm 2xl:text-base text-primary-50 border border-primary-50 px-3 py-2 rounded-full items-center gap-3">
+          <p className=" text-pretty justify-center inline-flex text-sm 2xl:text-base text-primary-50 border border-primary-50 px-3 py-2 rounded-full items-center gap-3">
             <Image src={"/images/mail.svg"} alt="bg" width={25} height={25} />
             Help@HuntGrounds.com
           </p>

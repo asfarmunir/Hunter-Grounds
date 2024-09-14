@@ -109,7 +109,7 @@ body {
 
 .oyo {
   background-image:
-    radial-gradient( at 50% 16%, rgba(255, 153, 0, 0.1) 0, transparent 22%),
+    radial-gradient( at 50% 16%, rgba(255, 153, 0, 0.1) 0, transparent 17%),
     radial-gradient(at 100% 45%, rgba(255, 153, 0, 0.3) 0, transparent 0%);
 }
 
