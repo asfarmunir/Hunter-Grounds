@@ -4,7 +4,7 @@ import React from "react";
 import AddWidget from "@/components/shared/modals/AddWidget";
 const page = () => {
   return (
-    <div className=" w-full px-5 md:px-20 mt-10 2xl-mt-12 bg-primary ">
+    <div className=" w-full px-5 md:px-20 mt-10 2xl-mt-12 bg-[#000214] ">
       <div className="flex items-center justify-between w-full">
         <div className="flex flex-col">
           <p className=" font-thin  mb-2 2xl:text-lg text-primary-50">

@@ -14,9 +14,9 @@ const urbanist = Urbanist({
 });
 
 export const metadata: Metadata = {
-  title: "Prop Picks",
+  title: "Hunt Grounds",
   description:
-    " Prop Picks is a platform that allows you to make money by predicting the outcome of sports events.",
+    "Hunt Grounds is a platform that allows you to find the best hunting grounds in your area.",
 };
 
 export default function RootLayout({

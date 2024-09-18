@@ -4,7 +4,7 @@ import Topbar from "@/components/shared/Topbar";
 import Footer from "@/components/shared/Footer";
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className=" relative h-screen bg-primary ">
+    <main className=" relative h-screen bg-[#000214] ">
       <div
         className="  sticky 
         top-0

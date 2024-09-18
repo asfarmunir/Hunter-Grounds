@@ -15,7 +15,7 @@ const PayoutByPeriod = () => {
           </button>
         </div>
       </div>
-      <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2 lg:grid-cols-4  rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
+      <div className=" w-full grid bg-[#000214] grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2 lg:grid-cols-4  rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
         {details.map((detail, index) => (
           <div
             key={index}

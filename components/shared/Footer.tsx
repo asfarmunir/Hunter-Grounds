@@ -21,8 +21,8 @@ const socials = [
 ];
 const Footer = () => {
   return (
-    <div className=" w-full flex items-center bg-primary  justify-between px-6 pb-12  md:pl-10 2xl:pl-16 md:pr-0 md:h-[30rem] 2xl:h-[34rem]  overflow-hidden">
-      <div className="flex flex-col md:flex-row gap-10 pt-36">
+    <div className=" w-full flex items-center bg-[#000214]  justify-between px-6 pb-12  md:pl-10 2xl:pl-16 md:pr-0 md:h-[35rem] 2xl:h-[40rem]   overflow-hidden">
+      <div className="flex flex-col md:flex-row gap-10 pt-12 md:pt-32 md:pl-8 pb-12 ">
         <div className="flex flex-col gap-2 ">
           <h2 className="text-2xl 2xl:text-4xl font-black">
             Let's Keep in Touch
@@ -35,7 +35,7 @@ const Footer = () => {
             <input
               type="text"
               placeholder="Enter your email"
-              className=" dark:bg-transparent"
+              className=" bg-transparent"
             />
             <button className=" bg-gradient-to-t from-[#FF9900] to-[#FFE7A9] text-xs md:text-sm rounded-full px-6 py-4 text-black font-semibold 2xl:text-lg">
               Subscribe
@@ -89,16 +89,16 @@ const Footer = () => {
           </p>
         </div>
         <div className="flex flex-col gap-6">
-          <Link className=" 2xl:text-xl font-semibold" href={"/"}>
+          <Link className=" 2xl:text-xl font-thin" href={"/"}>
             FAQ
           </Link>
-          <Link className=" 2xl:text-xl font-semibold" href={"/"}>
+          <Link className=" 2xl:text-xl font-thin" href={"/"}>
             Terms Of Service
           </Link>
-          <Link className=" 2xl:text-xl font-semibold" href={"/"}>
+          <Link className=" 2xl:text-xl font-thin" href={"/"}>
             Privacy Policy
           </Link>
-          <Link className=" 2xl:text-xl font-semibold" href={"/"}>
+          <Link className=" 2xl:text-xl font-thin" href={"/"}>
             Write to Us
           </Link>
           <p className=" text-pretty justify-center inline-flex text-sm 2xl:text-base text-primary-50 border border-primary-50 px-3 py-2 rounded-full items-center gap-3">
@@ -107,16 +107,16 @@ const Footer = () => {
           </p>
         </div>
         <div className="flex flex-col gap-6">
-          <Link className=" 2xl:text-xl font-semibold" href={"/"}>
+          <Link className=" 2xl:text-xl font-thin" href={"/"}>
             Cookie Policy
           </Link>
-          <Link className=" 2xl:text-xl font-semibold" href={"/"}>
+          <Link className=" 2xl:text-xl font-thin" href={"/"}>
             Refund Policy
           </Link>
-          <Link className=" 2xl:text-xl font-semibold" href={"/"}>
+          <Link className=" 2xl:text-xl font-thin" href={"/"}>
             Gun Safety
           </Link>
-          <Link className=" 2xl:text-xl font-semibold" href={"/"}>
+          <Link className=" 2xl:text-xl font-thin" href={"/"}>
             Risk Disclosure
           </Link>
           <p className=" text-pretty inline-flex border border-[#05d5ff3f] text-primary-50 px-3 py-2 rounded-full items-center justify-center gap-3">

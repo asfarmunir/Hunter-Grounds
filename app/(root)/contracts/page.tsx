@@ -32,7 +32,7 @@ const payoutTabs = [
 ];
 const page = () => {
   return (
-    <div className=" w-full px-7 mt-7 2xl-mt-8 oyo md:px-20">
+    <div className=" w-full px-7 mt-7 2xl-mt-8 oyo bg-[#000214] md:px-20">
       <p className=" font-thin mb-2  text-primary-50 2xl:text-lg">
         Sales Management
       </p>
@@ -89,7 +89,7 @@ const page = () => {
             </button>
           </div>
         </div>
-        <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
+        <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-[#000214] ">
           <Table className=" ">
             <TableHeader className=" ">
               <TableRow className=" border-none">

@@ -46,7 +46,9 @@ const PayoutByPeriod = () => {
     <div className=" w-full rounded-3xl  bg-primary-100 mt-6 2xl:mt-8">
       <div className=" w-full p-2.5 2xl:p-4 flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
         <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-4">
-          <h3 className="font-semibold pl-4">Orders</h3>
+          <h3 className="font-semibold pl-4 border-r border-primary-50 pr-3">
+            Orders
+          </h3>
           <div className="flex  justify-center md:justify-start     items-center gap-1.5">
             {tabs.map((t, index) => (
               <button
@@ -97,8 +99,8 @@ const PayoutByPeriod = () => {
           </button>
         </div>
       </div>
-      <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
-        <Table className=" bg-background">
+      <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-[#000214] ">
+        <Table className=" ">
           <TableHeader className=" ">
             <TableRow className=" border-none">
               <TableHead className="text-sm bg-[#372F2F99]/50  rounded-tl-full rounded-bl-full ">

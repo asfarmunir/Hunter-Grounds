@@ -54,7 +54,7 @@ const page = () => {
   };
 
   return (
-    <div className=" w-full oyo px-7 mt-7 2xl-mt-8 md:px-20 overflow-hidden">
+    <div className=" w-full oyo px-7 mt-7 2xl-mt-8 md:px-20 bg-[#000214] overflow-hidden">
       <Link
         href={"/affiliates"}
         className=" font-semibold mb-3 inline-flex items-center text-primary-50 gap-2"
@@ -64,7 +64,7 @@ const page = () => {
       </Link>
       <h1 className=" text-4xl 2xl:text-5xl font-bold">Details</h1>
       <div className="flex gap-6 my-6 w-full flex-col">
-        <div className="flex  justify-center md:justify-start  max-w-full pb-4 overflow-auto  items-center gap-1.5">
+        <div className="flex bg-primary-100 rounded-full  justify-center md:justify-start  max-w-full p-5 overflow-auto  items-center gap-1.5">
           {tabs.map((t, index) => (
             <button
               key={index}
@@ -143,33 +143,33 @@ const page = () => {
               </div>
             </div>
           </div>
-          <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
-            <Table className=" bg-background">
+          <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 ">
+            <Table className=" ">
               <TableHeader className=" ">
                 <TableRow className=" border-none">
-                  <TableHead className="text-sm bg-primary-200/40 rounded-tl-full rounded-bl-full ">
+                  <TableHead className="text-sm bg-primary-200 rounded-tl-full rounded-bl-full ">
                     ID
                   </TableHead>
-                  <TableHead className="text-sm bg-primary-200/40 capitalize">
+                  <TableHead className="text-sm bg-primary-200 capitalize">
                     name
                   </TableHead>
-                  <TableHead className="text-sm bg-primary-200/40 capitalize">
+                  <TableHead className="text-sm bg-primary-200 capitalize">
                     parent
                   </TableHead>
-                  <TableHead className="text-sm bg-primary-200/40 capitalize">
+                  <TableHead className="text-sm bg-primary-200 capitalize">
                     Paid Earnings
                   </TableHead>
-                  <TableHead className="text-sm bg-primary-200/40 capitalize">
+                  <TableHead className="text-sm bg-primary-200 capitalize">
                     Unpaid Earnings
                   </TableHead>
-                  <TableHead className="text-sm bg-primary-200/40 capitalize">
+                  <TableHead className="text-sm bg-primary-200 capitalize">
                     Unpaid Commisions
                   </TableHead>
-                  <TableHead className="text-sm bg-primary-200/40 capitalize">
+                  <TableHead className="text-sm bg-primary-200 capitalize">
                     status
                   </TableHead>
 
-                  <TableHead className="text-sm bg-primary-200/40 rounded-tr-full rounded-br-full  capitalize">
+                  <TableHead className="text-sm bg-primary-200 rounded-tr-full rounded-br-full  capitalize">
                     actions
                   </TableHead>
                 </TableRow>

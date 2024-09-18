@@ -57,7 +57,7 @@ const page = () => {
   };
 
   return (
-    <div className=" w-full px-7 md:px-20 mt-7 2xl-mt-8 oyo overflow-hidden ">
+    <div className=" w-full px-7 md:px-20 mt-7 2xl-mt-8 oyo bg-[#000214] overflow-hidden ">
       <p className=" font-thin mb-2 text-primary-50 2xl:text-xl">Account</p>
       <h1 className=" text-4xl 2xl:text-5xl font-bold">Client Profile</h1>
       <div className="flex gap-6 my-6 w-full flex-col">
@@ -221,7 +221,7 @@ const page = () => {
             </div>
           </div>
         </div>
-        <div className="flex  justify-center md:justify-start  max-w-full pb-4 overflow-auto  items-center gap-1.5">
+        <div className="flex bg-primary-100  justify-center md:justify-start  max-w-full p-5 rounded-full overflow-auto  items-center gap-2">
           {reportTabs.map((t, index) => (
             <button
               key={index}

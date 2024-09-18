@@ -46,11 +46,11 @@ const PayoutByPeriod = () => {
   return (
     <div className=" w-full rounded-3xl bg-primary-100 mt-6 2xl:mt-8">
       <div className=" w-full p-2.5 2xl:p-4 flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
-        <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-4">
+        <div className="flex flex-col md:flex-row w-full md:w-fit  items-start md:items-center gap-4">
           <h3 className="font-semibold pl-4 border-r border-primary-50 pr-3">
             Emails
           </h3>
-          <div className="hidden md:flex  justify-center md:justify-start     items-center gap-1.5">
+          <div className="flex   justify-start    flex-wrap   items-center gap-1.5">
             {tabs.map((t, index) => (
               <button
                 key={index}
@@ -67,7 +67,7 @@ const PayoutByPeriod = () => {
             ))}
           </div>
         </div>
-        <div className="flex items-center flex-wrap md:flex-nowrap gap-1.5">
+        <div className="hidden md:flex items-center flex-wrap md:flex-nowrap gap-1.5">
           <div className=" bg-primary-200 border border-primary-50 inline-flex  w-full md:w-fit items-center px-4 rounded-full">
             <LuSearch className="w-4 h-4 text-[#848BAC] " />
             <Input
@@ -96,9 +96,6 @@ const PayoutByPeriod = () => {
               className=" dark:invert"
             />
           </button>
-          <button className="bg-primary-200 border border-primary-50 p-3 capitalize rounded-full text-xs font-semibold ">
-            toggle colomn
-          </button>
         </div>
       </div>
       {
@@ -118,7 +115,7 @@ export default PayoutByPeriod;
 const Template = () => {
   return (
     <div className=" w-full rounded-3xl bg-primary-100 mt-6 2xl:mt-8">
-      <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2 lg:grid-cols-3  rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
+      <div className=" w-full grid grid-cols-1 md:grid-cols-2 bg-[#000214] gap-x-3 gap-y-2 lg:grid-cols-3  rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
         {details.map((detail, index) => (
           <div
             key={index}
@@ -187,7 +184,7 @@ const details = [
 const History = () => {
   return (
     <>
-      <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
+      <div className=" w-full rounded-tr-3xl bg-[#000214] rounded-tl-3xl p-4 bg-background">
         <Table className=" bg-background">
           <TableHeader className=" ">
             <TableRow className=" border-none">

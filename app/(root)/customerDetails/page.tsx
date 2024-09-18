@@ -62,7 +62,7 @@ const page = () => {
   };
 
   return (
-    <div className=" w-full px-7 mt-7 md:px-20 2xl-mt-8 oyo overflow-hidden ">
+    <div className=" w-full px-7 mt-7 md:px-20 bg-[#000214] 2xl-mt-8 oyo overflow-hidden ">
       <p className=" font-thin  2xl:text-lg mb-2 text-primary-50">
         Sales Management
       </p>
@@ -78,7 +78,7 @@ const page = () => {
                 alt="warning"
                 className=" mb-4 2xl:mb-6"
               />
-              <h2 className=" font-bold text-3xl 2xl:text-4xl">$202,304</h2>
+              <h2 className=" font-bold text-xl 2xl:text-4xl">$202,304</h2>
               <p className=" text-xs 2xl:text-sm">Total Spend</p>
             </div>{" "}
             <div className=" flex flex-col p-5 flex-grow bg-[#372F2F99] rounded-2xl">
@@ -89,12 +89,12 @@ const page = () => {
                 alt="warning"
                 className=" mb-4 2xl:mb-6"
               />
-              <h2 className=" font-bold text-3xl 2xl:text-4xl">$202,304</h2>
+              <h2 className=" font-bold text-xl 2xl:text-4xl">$202,304</h2>
               <p className=" text-xs 2xl:text-sm">Total Withdrawl</p>
             </div>{" "}
           </div>
           <div className=" w-full bg-primary-100 p-4 flex rounded-2xl flex-col items-center">
-            <h3 className=" w-full  bg-primary-200 p-3 mb-5 rounded-2xl font-semibold text-center">
+            <h3 className=" w-full  bg-primary-200 p-3 mb-5 text-sm 2xl:text-base rounded-2xl font-semibold text-center">
               Detailed Information
             </h3>
             <div className=" p-4 space-y-4 bg-white dark:bg-primary-100 w-full rounded-2xl">
@@ -123,7 +123,7 @@ const page = () => {
             </div>
           </div>
           <div className=" w-full bg-primary-100 p-4 flex rounded-2xl flex-col items-center">
-            <h3 className=" w-full bg-primary-200 text-primary-50  p-3 mb-5 rounded-3xl font-semibold text-center">
+            <h3 className=" w-full bg-primary-200 text-primary-50 text-sm 2xl:text-base  p-3 mb-5 rounded-3xl font-semibold text-center">
               Activities
             </h3>
             <div className=" p-4 space-y-4  w-full rounded-2xl">
@@ -167,7 +167,7 @@ const page = () => {
             </div>
           </div>
         </div>
-        <div className="flex  justify-center md:justify-start  max-w-full pb-4 overflow-auto  items-center gap-1.5">
+        <div className="flex bg-primary-100  justify-center md:justify-start  max-w-full p-5 rounded-full overflow-auto  items-center gap-1.5">
           {reportTabs.map((t, index) => (
             <button
               key={index}
