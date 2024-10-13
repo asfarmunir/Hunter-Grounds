@@ -12,7 +12,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
   }
   const user = await getUserDetails(id);
   console.log("🚀 ~ page ~ user:", user);
-  return <CustomerDetails user={user} />;
+  return <CustomerDetails user={user.user} />;
 };
 
 export default page;

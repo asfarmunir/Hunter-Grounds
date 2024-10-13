@@ -56,7 +56,7 @@ export const getUserDetails = async (id: string) => {
       throw new Error("User not found");
     }
 
-    return { user, status: 200 };
+    return JSON.parse(JSON.stringify({ user, status: 200 }));
   } catch (error:any) {
     console.error("Get user details error:", error.message || error);
     return { 

@@ -120,13 +120,13 @@ const page = ({
                       $
                       {user.withdrawableAmount
                         ? user.withdrawableAmount / 100
-                        : "N/A"}
+                        : "0"}
                     </TableCell>
                     <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214]  ">
                       $
                       {user.referalWithdrawableAmount
                         ? user.referalWithdrawableAmount / 100
-                        : "N/A"}
+                        : "0"}
                     </TableCell>
                     <TableCell className=" text-xs text-center  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
                       <Link

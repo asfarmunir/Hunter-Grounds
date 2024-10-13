@@ -3,48 +3,7 @@ import Image from "next/image";
 import React from "react";
 import Orders from "@/components/shared/customerDetails/Orders";
 import { IUser } from "@/lib/types/user";
-const reportTabs = [
-  {
-    name: "orders",
-    tab: "orders",
-  },
-  {
-    name: "notes",
-    tab: "notes",
-  },
-  {
-    name: "Prop accounts",
-    tab: "prop-accounts",
-  },
-  {
-    name: "Payouts",
-    tab: "payouts",
-  },
-  {
-    name: "E-mails",
-    tab: "emails",
-  },
-  {
-    name: "Certificates",
-    tab: "certificates",
-  },
-  {
-    name: "cash history",
-    tab: "cash-history",
-  },
-  {
-    name: "Contracts",
-    tab: "contracts",
-  },
-  {
-    name: "IP logs",
-    tab: "ip-logs",
-  },
-  {
-    name: "logs",
-    tab: "logs",
-  },
-];
+
 const page = ({ user }: { user: IUser }) => {
   const [tab, setTab] = React.useState("orders");
 
@@ -207,39 +166,7 @@ const page = ({ user }: { user: IUser }) => {
             </div>
           </div>
         </div>
-        <div className="flex bg-primary-100  justify-center md:justify-start  max-w-full p-5 rounded-full overflow-auto  items-center gap-1.5">
-          {reportTabs.map((t, index) => (
-            <button
-              key={index}
-              onClick={() => handleTab(t.tab)}
-              className={` capitalize text-xs text-nowrap font-semibold p-2.5 2xl:p-3 px-5 
-                tracking-wide 2xl:px-7 text-center rounded-full ${
-                  tab === t.tab
-                    ? "bg-[#FF990033] text-primary-50"
-                    : " bg-[#372F2F99]  text-white"
-                }`}
-            >
-              {t.name}
-            </button>
-          ))}
-          {/* <CustomerVerification /> */}
-        </div>
       </div>
-
-      {
-        {
-          orders: <Orders />,
-          // notes: <Notes />,
-          // "prop-accounts": <PropAccount />,
-          // payouts: <Payouts />,
-          // emails: <Emails />,
-          // certificates: <Certificates />,
-          // "cash-history": <EditLogs />,
-          // contracts: <Contracts />,
-          // "ip-logs": <Logs />,
-          // logs: <Logs />,
-        }[tab]
-      }
     </div>
   );
 };
