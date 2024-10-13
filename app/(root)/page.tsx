@@ -1,10 +1,17 @@
 import { Input } from "@/components/ui/input";
 import { calculateTotalBookingAmount } from "@/lib/database/actions/booking.action";
 import { calculateBookingPaymentStats } from "@/lib/database/actions/user.action";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import React from "react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
 const page = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    redirect("/login");
+  }
   const stats = await calculateBookingPaymentStats();
   const totalPayment = await calculateTotalBookingAmount();
 
