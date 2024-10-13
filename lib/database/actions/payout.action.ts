@@ -82,7 +82,9 @@ export const updatePayoutStatus = async (id: string, status: string) => {
         // Send an email to the user informing them of the status update
         const subject = `Your Payout Status Has Been Updated to ${status}`;
         const emailTemplate = generatePayoutEmailTemplate(payout.user.firstname, payout.amount, status);
-        await sendEmail('asfarma2815@gmail.com', subject, emailTemplate);
+        await sendEmail(
+            payout.user.email
+          , subject, emailTemplate);
 
         return JSON.parse(JSON.stringify({ status: 200, message: "Payout status updated and email sent" }));
 
