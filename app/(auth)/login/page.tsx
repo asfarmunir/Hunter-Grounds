@@ -152,8 +152,6 @@ const AddClient = ({
             <button
               type="button"
               onClick={() => {
-                // @ts-ignore
-                if (loginRef.current) loginRef.current.click();
                 router.push("/reset-password");
               }}
               className="text-xs 2xl:text-sm font-semibold"

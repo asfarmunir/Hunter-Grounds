@@ -26,9 +26,6 @@ const Navbar = () => {
   const session = useSession();
   const router = useRouter();
 
-  const loginModalRef = useRef(null);
-  const pathname = usePathname();
-
   const signOutUser = async () => {
     await signOut({
       redirect: false,
