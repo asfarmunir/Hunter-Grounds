@@ -1,147 +1,97 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { navlinks } from "@/lib/constants";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { GoPeople } from "react-icons/go";
+import { FaRegQuestionCircle } from "react-icons/fa";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { IoMdSearch } from "react-icons/io";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { RxHamburgerMenu, RxCalendar } from "react-icons/rx";
-import { format } from "date-fns";
 
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import LoginModal from "@/components/shared/LoginModal";
+import { useSession, signOut } from "next-auth/react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 const Navbar = () => {
-  const [date, setDate] = React.useState<Date>();
+  const session = useSession();
+  const router = useRouter();
 
+  const loginModalRef = useRef(null);
   const pathname = usePathname();
+
+  const signOutUser = async () => {
+    await signOut({
+      redirect: false,
+      callbackUrl: "/",
+    });
+    toast.success("Signed out successfully");
+    router.refresh();
+    router.replace("/");
+  };
+
   return (
-    <nav className=" w-full bg-primary  rounded-full px-3 md:pl-10 2xl:pl-12 2xl:px-5 py-3.5 flex items-center justify-between">
-      <Image
-        src="/images/logo.svg"
-        alt="Logo"
-        width={130}
-        height={130}
-        className=" w-36 2xl:w-48  "
-      />
+    <nav className=" w-full  rounded-full px-3 md:pl-10 2xl:pl-12 2xl:px-5 py-3.5 flex items-center justify-between">
+      <Link href={"/"}>
+        <Image
+          src="/images/logo.svg"
+          alt="Logo"
+          width={130}
+          height={130}
+          className=" w-36 2xl:w-48  "
+        />
+      </Link>
 
-      <div className=" bg-[#2A2A2A] px-4 py-2 hidden md:flex items-center gap-2 rounded-lg">
-        <Popover>
-          <PopoverTrigger asChild>
-            <button
-              className={
-                " inline-flex items-center gap-2 text-xs 2xl:text-sm border-r px-2.5 border-gray-500 dark:bg-transparent "
-              }
-            >
-              <Image
-                src={"/images/calendar.svg"}
-                width={17}
-                height={17}
-                alt="logo"
-              />{" "}
-              {date ? (
-                format(date, "PPP")
-              ) : (
-                <span className="text-white">Add Dates +</span>
-              )}
-            </button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-
-        <button className="inline-flex items-center gap-2 text-xs 2xl:text-sm border-r px-2.5 border-gray-500">
-          <Image src={"/images/guest.svg"} width={18} height={18} alt="logo" />
-          Add Guests +
-        </button>
-        <button className="inline-flex items-center gap-2 text-xs 2xl:text-sm border-r px-2.5 border-gray-500">
-          <Image src={"/images/map.svg"} width={18} height={18} alt="logo" />
-          Map Area
-        </button>
-
-        <IoMdSearch className=" bg-gradient-to-b from-[#FF9900] to-[#10111080] px-1 ml-3 rounded-md w-6 2xl:w-7 h-6 2xl:h-7" />
-      </div>
       <div className=" hidden md:flex items-center gap-4">
-        {navlinks.map((link, index) => (
+        {/* {navlinks.map((link, index) => (
           <Link
             key={index}
-            className={`text-sm 2xl:text-base font-semibold pb-1.5 mt-1.5
-            ${
-              pathname === link.href
-                ? "border-b-2 px-2 border-primary-50/50"
-                : ""
-            }
+            className={`text-sm 2xl:text-base font-semibold hover:border-b-2 border-primary-50 hover:-translate-y-1 transition-all   pb-1.5 mt-1.5
+            ${pathname === link.href ? "border-b-2 px-2 border-primary-50" : ""}
         `}
             href={link.href}
           >
             {link.name}
           </Link>
-        ))}
+        ))} */}
+        {/* <Link
+          className={`text-sm 2xl:text-base font-semibold hover:border-b-2 border-primary-50 hover:-translate-y-1 transition-all   pb-1.5 mt-1.5`}
+          href={
+            session.status === "authenticated"
+              ? "/dashboard/add-property"
+              : "/start-hosting"
+          }
+        >
+          Start Hosting
+        </Link> */}
         {/* <button className="text-sm 2xl:text-base font-semibold">
           Sign Out
         </button> */}
-        <>
-          <button
-            className={`text-sm 2xl:text-base font-semibold pb-1.5 mt-1.5
+        {session.status === "authenticated" ? (
+          <>
+            <button
+              onClick={signOutUser}
+              className={`border bg-gradient-to-b hover:-translate-y-1 transition-all from-[#FF9900] to-[#FFE7A9] text-black font-bold rounded-full px-3 py-2 inline-flex items-center gap-2
 
         `}
-          >
-            Sign Out
-          </button>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Image
-                src={"/images/avatar.svg"}
-                width={45}
-                height={45}
-                alt="logo"
-                className="rounded-full"
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="mr-8 mt-2  rounded-xl border border-primary-50 ">
-              <DropdownMenuItem
-                asChild
-                className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer"
-              >
-                <Link href={"/account/settings"}>Accounts</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer">
-                Trip
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer">
-                Help and FAQ
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer">
-                Store
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer">
-                Earn CA$100
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </>
+            >
+              Sign Out
+            </button>
+          </>
+        ) : (
+          <>
+            <LoginModal loginRef={loginModalRef} />
+          </>
+        )}
 
         {/* <Image src={"/images/avatar.svg"} width={37} height={37} alt="logo" /> */}
       </div>
@@ -151,7 +101,7 @@ const Navbar = () => {
         </SheetTrigger>
         <SheetContent className=" dark:bg-primary p-4 border-none">
           <Image src={"/images/logo.svg"} width={137} height={137} alt="logo" />
-          <div className="flex flex-col items-center -mt-16 justify-center h-full gap-2">
+          <div className="flex flex-col-reverse items-center -mt-16 justify-center h-full gap-2">
             {navlinks.map((link, index) => (
               <Link
                 key={index}
@@ -164,46 +114,68 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <div className=" mt-5 flex flex-col-reverse items-center gap-4">
-              <button
-                className={`text-sm 2xl:text-base font-semibold pb-1.5 mt-1.5
+            {pathname !== "/start-hosting" ? (
+              <div className=" mt-5 flex flex-col-reverse items-center gap-4">
+                <button
+                  className={`text-sm bg-primary-50 w-full text-clip px-6 py-2 rounded-lg 2xl:text-base font-semibold mt-2 mb-5 
 
         `}
-              >
-                Sign Out
-              </button>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Image
-                    src={"/images/avatar.svg"}
-                    width={45}
-                    height={45}
-                    alt="logo"
-                    className="rounded-full"
-                  />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="mr-8 mt-2  rounded-xl border border-primary-50 ">
-                  <DropdownMenuItem
-                    asChild
-                    className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer"
-                  >
-                    <Link href={"/account/settings"}>Accounts</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer">
-                    Trip
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer">
-                    Help and FAQ
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer">
-                    Store
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-primary-50 hover:text-white px-2 font-semibold hover:bg-primary-50/50 cursor-pointer">
-                    Earn CA$100
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+                >
+                  Sign Out
+                </button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Image
+                      src={"/images/avatar.svg"}
+                      width={45}
+                      height={45}
+                      alt="logo"
+                      className="rounded-full"
+                    />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="mr-8 mt-2  rounded-xl border border-primary-50 ">
+                    <Link href={"/account"}>
+                      {" "}
+                      <DropdownMenuItem className=" inline-flex items-center gap-2 px-2 font-normal hover:bg-primary-50/50 cursor-pointer">
+                        <GoPeople className="text-lg text-primary-50" />
+                        Accounts
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href={"/dashboard"}>
+                      {" "}
+                      <DropdownMenuItem className=" inline-flex items-center gap-2 px-2 font-normal hover:bg-primary-50/50 cursor-pointer">
+                        <GoPeople className="text-lg text-primary-50" />
+                        Dashboard
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href={"/account"}>
+                      <DropdownMenuItem className=" gap-2 hover:text-white px-2 font-normal hover:bg-primary-50/50 cursor-pointer">
+                        <FaRegQuestionCircle className="text-lg text-primary-50" />
+                        Trip
+                      </DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuItem className=" gap-2 hover:text-white px-2 font-normal hover:bg-primary-50/50 cursor-pointer">
+                      <FaRegQuestionCircle className="text-lg text-primary-50" />
+                      Help and FAQ
+                    </DropdownMenuItem>
+                    {/* <DropdownMenuItem className=" gap-2 hover:text-white px-2 font-normal hover:bg-primary-50/50 cursor-pointer">
+                  <FaRegQuestionCircle className="text-lg text-primary-50" />
+                  Store
+                </DropdownMenuItem> */}
+                    <Link href={"/refer-and-earn"}>
+                      <DropdownMenuItem className=" gap-2 hover:text-white px-2 font-normal hover:bg-primary-50/50 cursor-pointer">
+                        <FaRegQuestionCircle className="text-lg text-primary-50" />
+                        Hunt Cash
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            ) : (
+              <div className=" mt-5 gap-4 flex flex-col">
+                <LoginModal loginRef={loginModalRef} />
+              </div>
+            )}
           </div>
         </SheetContent>
       </Sheet>

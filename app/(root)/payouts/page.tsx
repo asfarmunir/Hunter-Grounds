@@ -1,6 +1,6 @@
 import React from "react";
-import Bookings from "@/components/shared/Bookings";
-import { getAllBookings } from "@/lib/database/actions/booking.action";
+import Payouts from "@/components/shared/Payouts";
+import { getAllPayouts } from "@/lib/database/actions/payout.action";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
@@ -15,17 +15,19 @@ const page = async ({ searchParams }: SearchParamProps) => {
     redirect("/");
   }
   const page = Number(searchParams?.page) || 1;
+  const status = searchParams?.status as string;
 
-  const bookings = await getAllBookings({
+  const payouts = await getAllPayouts({
     limit: 8,
     page,
+    status,
   });
   return (
-    <Bookings
-      bookings={bookings.bookings}
-      totalBookings={bookings.totalBookings}
+    <Payouts
+      payout={payouts.payouts}
+      totalPayouts={payouts.totalPayouts}
       page={page}
-      totalPages={bookings.totalPages}
+      totalPages={payouts.totalPages}
     />
   );
 };

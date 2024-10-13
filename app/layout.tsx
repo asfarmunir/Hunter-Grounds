@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Poppins, Urbanist } from "next/font/google";
+import { Lexend, Urbanist } from "next/font/google";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
-
-// import { Toaster } from "react-hot-toast";
+import AuthSessionProvider from "@/lib/AuthProvider";
+import { Toaster } from "react-hot-toast";
 // import AuthSessionProvider from "@/lib/AuthSession";
 
 const urbanist = Urbanist({
@@ -13,8 +13,14 @@ const urbanist = Urbanist({
   variable: "--font-urbanist",
 });
 
+const lexend = Lexend({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-lexend",
+});
+
 export const metadata: Metadata = {
-  title: "Hunt Grounds",
+  title: "Hunt Grounds Admins",
   description:
     "Hunt Grounds is a platform that allows you to find the best hunting grounds in your area.",
 };
@@ -26,28 +32,31 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={urbanist.variable}>
-        <NextTopLoader
-          color="pink"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={2}
-          showSpinner={false}
-          crawl={true}
-          easing="ease"
-          speed={200}
-          shadow="0 0 5px #2299DD,0 0 5px #2299DD"
-        />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-        {/* <Toaster position="bottom-center" /> */}
-      </body>
+      <AuthSessionProvider>
+        <body className={lexend.variable}>
+          <NextTopLoader
+            color="orange"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={2}
+            showSpinner={false}
+            crawl={true}
+            easing="ease"
+            speed={200}
+            shadow="0 0 5px #2299DD,0 0 5px #2299DD"
+          />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+
+          <Toaster position="top-right" />
+        </body>
+      </AuthSessionProvider>
     </html>
   );
 }

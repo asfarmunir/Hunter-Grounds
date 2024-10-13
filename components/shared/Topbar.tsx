@@ -12,19 +12,19 @@ const links = [
   },
   {
     name: "Bookings",
-    href: "/404",
+    href: "/orders",
   },
   {
-    name: "Property",
-    href: "/404",
+    name: "Customers",
+    href: "/customers",
   },
   {
-    name: "Calendar",
-    href: "/404",
+    name: "Payouts",
+    href: "/payouts",
   },
   {
-    name: "Inbox",
-    href: "/404",
+    name: "Affiliates",
+    href: "/affiliates",
   },
 ];
 
