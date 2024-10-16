@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import Orders from "@/components/shared/customerDetails/Orders";
 import { IUser } from "@/lib/types/user";
 
-const page = ({ user }: { user: IUser }) => {
+const page = ({ user, payoutSummary }: { user: IUser; payoutSummary: any }) => {
   const [tab, setTab] = React.useState("orders");
 
   const handleTab = (tab: string) => {
@@ -159,12 +158,98 @@ const page = ({ user }: { user: IUser }) => {
               <p
                 className={`
               ${user.isVerified ? "bg-emerald-600" : "bg-yellow-500"}
-                 text-white  p-2.5 font-semibold rounded-full px-5`}
+                 text-white text-xs 2xl:text-sm text-nowrap  p-2.5 font-semibold rounded-full px-5`}
               >
                 {user.isVerified ? "Verified" : "Not Verified"}
               </p>
+              <p
+                className={`
+            bg-emerald-600
+                 text-white text-xs 2xl:text-sm p-2.5 font-semibold rounded-full px-5`}
+              >
+                {user._id ? user._id.slice(0, 8) + "..." : "N/A"}
+              </p>
             </div>
           </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 rounded-2xl gap-4 bg-primary-100/50">
+          <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
+            <Image
+              src="/images/balance.svg"
+              width={50}
+              height={54}
+              alt="warning"
+              className=" mb-9 2xl:mb-12"
+            />
+            <h2 className=" font-bold text-3xl 2xl:text-4xl">
+              $
+              {user.referalWithdrawableAmount
+                ? user.referalWithdrawableAmount / 100
+                : 0}
+            </h2>
+            <p className=" text-xs 2xl:text-sm">Refferal Balance</p>
+          </div>{" "}
+          {/* <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
+            <Image
+              src="/images/equity.svg"
+              width={50}
+              height={54}
+              alt="warning"
+              className=" mb-9 2xl:mb-12"
+            />
+            <h2 className=" font-bold text-3xl 2xl:text-4xl">$9203</h2>
+            <p className=" text-xs 2xl:text-sm capitalize">Equity</p>
+          </div>{" "}
+          <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
+            <Image
+              src="/images/total.svg"
+              width={50}
+              height={54}
+              alt="warning"
+              className=" mb-9 2xl:mb-12"
+            />
+            <h2 className=" font-bold text-3xl 2xl:text-4xl">$202,304</h2>
+            <p className=" text-xs 2xl:text-sm">Profit</p>
+          </div>{" "} */}
+          <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
+            <Image
+              src="/images/withdraw.svg"
+              width={50}
+              height={54}
+              alt="warning"
+              className=" mb-9 2xl:mb-12"
+            />
+            <h2 className=" font-bold text-3xl 2xl:text-4xl">
+              ${user.withdrawableAmount ? user.withdrawableAmount / 100 : 0}
+            </h2>
+            <p className=" text-xs 2xl:text-sm capitalize">
+              withdrawable profit
+            </p>
+          </div>{" "}
+          <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
+            <Image
+              src="/images/total.svg"
+              width={50}
+              height={54}
+              alt="warning"
+              className=" mb-9 2xl:mb-12"
+            />
+            <h2 className=" font-bold text-3xl 2xl:text-4xl">
+              ${payoutSummary.totalAmount ? payoutSummary.totalAmount : 0}
+            </h2>
+            <p className=" text-xs 2xl:text-sm capitalize">total payouts</p>
+          </div>{" "}
+          {/* <div className=" flex flex-col p-5 flex-grow bg-[#16131399] rounded-2xl">
+            <Image
+              src="/images/server.svg"
+              width={50}
+              height={54}
+              alt="warning"
+              className=" mb-9 2xl:mb-12"
+            />
+            <h2 className=" font-bold text-3xl 2xl:text-4xl">Match Traders</h2>
+            <p className=" text-xs 2xl:text-sm capitalize">server</p>
+          </div>{" "} */}
         </div>
       </div>
     </div>

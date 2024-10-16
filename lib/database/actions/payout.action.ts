@@ -40,26 +40,7 @@ export const getAllPayouts = async ({ limit , page = 1, status }:{
     }
 }
 
-// export const updatePayoutStatus = async (id: string, status: string) => {
-//     try {
-//         await connectToDatabase();
 
-//         const payout = await Payout.findById(id);
-//         if (!payout) {
-//             return JSON.parse(JSON.stringify({ status: 404, message: "Payout not found" }));
-//         }
-
-//         payout.status = status;
-//         await payout.save();
-
-//         revalidatePath('/payouts');
-
-//         return JSON.parse(JSON.stringify({ status: 200 }));
-//     } catch (error) {
-//         console.error("Error updating payout status", error);
-//         return JSON.parse(JSON.stringify({ status: 400, message: "Error updating payout status" }));
-//     }
-// }
 
 export const updatePayoutStatus = async (id: string, status: string) => {
     try {
@@ -114,13 +95,67 @@ const generatePayoutEmailTemplate = (userName: string, amount: number, status: s
 
 
 // this fn returns the reffered users and their total booking amounts
-export const calculateReferralBookingTotals = async () => {
+export const calculateReferralBookingTotals = async (
+  {
+    limit,
+    affiliatePage,
+     affiliateName
+  }: {
+    limit: number;
+    affiliatePage: number;
+    affiliateName: string;
+  }
+) => {
+     console.log("🚀 ~ affiliateName:", affiliateName)
   try {
+    const skipAmount = limit * (Number(affiliatePage) - 1);
     // Step 1: Find users who were referred by someone and used their referral
-    const referredUsers = await User.find({
-      referedBy: { $ne: null }, // Users who have a referrer
-      referalUsed: true,       // Referral has been used
-    }).select("firstname lastname email profileImage"); // Select relevant user fields
+            interface UserQuery {
+          referedBy: { $ne: null };
+          referalUsed: true;
+          $or?: Array<{ firstname: { $regex: string, $options: string } } | { lastname: { $regex: string, $options: string } }>;
+          $and?: Array<{ firstname: { $regex: string, $options: string } } | { lastname: { $regex: string, $options: string } }>;
+        }
+
+        const nameParts = affiliateName.trim().split(' ');
+
+        let query: UserQuery = {
+          referedBy: { $ne: null }, // Users who have a referrer
+          referalUsed: true,
+        };
+
+        if (nameParts.length === 1) {
+          // If only one part (either firstname or lastname)
+          query.$or = [
+            { firstname: { $regex: nameParts[0], $options: 'i' } }, // Match first name
+            { lastname: { $regex: nameParts[0], $options: 'i' } },  // Match last name
+          ];
+        } else if (nameParts.length === 2) {
+          // If two parts (firstname and lastname)
+          query.$and = [
+            { firstname: { $regex: nameParts[0], $options: 'i' } }, // Match first name
+            { lastname: { $regex: nameParts[1], $options: 'i' } },  // Match last name
+          ];
+        } else if (nameParts.length >= 3) {
+          // If three or more parts (firstname and combined lastname)
+          const firstName = nameParts[0]; // First word as firstname
+          const lastName = nameParts.slice(1).join(' '); // Combine the rest for lastname
+
+          query.$and = [
+            { firstname: { $regex: firstName, $options: 'i' } }, // Match first name
+            { lastname: { $regex: lastName, $options: 'i' } },   // Match full last name (second and third words)
+          ];
+        }
+                  
+
+    const referredUsers = await User.find(query)
+      .limit(limit)
+      .skip(skipAmount)
+      .select("firstname lastname email profileImage")
+      // Select relevant user fields
+
+    
+     // Select relevant user fields
 
     let totalAmountsPerUser = []; // Array to store results
 
@@ -134,6 +169,8 @@ export const calculateReferralBookingTotals = async () => {
         return sum + (booking.totalAmount || 0); // Add each booking's totalAmount
       }, 0);
 
+      
+
       // Step 5: Store the user details and total booking amount
       totalAmountsPerUser.push({
         userId: user._id,
@@ -142,10 +179,17 @@ export const calculateReferralBookingTotals = async () => {
         profileImage: user.profileImage || null, // Handle case where profileImage might be null
         totalBookingAmount: totalAmount,
       });
+
     }
 
+    const totalReferals = await User.countDocuments({  referedBy: { $ne: null }, referalUsed: true });
+
+    const totalPages = Math.ceil(totalReferals / limit);
+
     // Return the final result
-    return JSON.parse(JSON.stringify(totalAmountsPerUser));
+    return JSON.parse(JSON.stringify({totalAmountsPerUser,
+      totalPages,
+    }));
   } catch (error) {
     console.error("Error calculating referral booking totals:", error);
     throw new Error("Error calculating referral booking totals");
@@ -187,12 +231,52 @@ interface CommissionWithUserDetails {
   profileImage: string | null;
 }
 
-export const getReferralEarningsData = async (): Promise<CommissionWithUserDetails[]> => {
+
+
+export const getReferralEarningsData = async ({
+  limit = 1,
+  page,
+  commissionateName
+}: {
+  limit: number;
+  page: number;
+  commissionateName: string;
+}) => {
   try {
     // Step 1: Find all users
-    const users = await User.find({});
+const nameParts = commissionateName.trim().split(' ');
 
-    let commissionDetails: CommissionWithUserDetails[] = []; // Array to store each commission with user details
+let query = {};
+
+if (nameParts.length === 1) {
+  // If only one part (either firstname or lastname)
+  query = {
+    $or: [
+      { firstname: { $regex: nameParts[0], $options: 'i' } }, // Match first name
+      { lastname: { $regex: nameParts[0], $options: 'i' } },  // Match last name
+    ],
+  };
+} else if (nameParts.length === 2) {
+  // If two parts (firstname and lastname)
+  query = {
+    firstname: { $regex: nameParts[0], $options: 'i' }, // Match first name
+    lastname: { $regex: nameParts[1], $options: 'i' },  // Match last name
+  };
+} else if (nameParts.length >= 3) {
+  // If three or more parts (firstname and combined lastname)
+  const firstName = nameParts[0]; // First word as firstname
+  const lastName = nameParts.slice(1).join(' '); // Combine the rest for lastname
+
+  query = {
+    firstname: { $regex: firstName, $options: 'i' }, // Match first name
+    lastname: { $regex: lastName, $options: 'i' },   // Match full last name (second and third words)
+  };
+}
+
+// Now you can run your query to search for users
+const users = await User.find(query);
+
+    let allCommissionDetails: CommissionWithUserDetails[] = []; // Array to store all commission details
 
     // Step 2: Loop through each user and extract their referral earnings
     for (const user of users) {
@@ -200,7 +284,7 @@ export const getReferralEarningsData = async (): Promise<CommissionWithUserDetai
         // Step 3: For each referral earning, create a record with the amount and user details
         user.referralEarnings.forEach((earning: { amount: number }) => {
           if (earning.amount) {
-            commissionDetails.push({
+            allCommissionDetails.push({
               amount: earning.amount,
               username: `${user.firstname || ""} ${user.lastname || ""}`.trim(), // Concatenate first and last name
               email: user.email,
@@ -211,10 +295,59 @@ export const getReferralEarningsData = async (): Promise<CommissionWithUserDetai
       }
     }
 
-    // Return the list of commissions with user details
-    return JSON.parse(JSON.stringify(commissionDetails));
+    // Step 4: Apply pagination to the combined referral earnings data
+    const skipAmount = limit * (Number(page) - 1);
+    const paginatedCommissionDetails = allCommissionDetails.slice(
+      skipAmount,
+      skipAmount + limit
+    );
+
+    // Return the paginated list of commissions with user details and total count
+    return JSON.parse(
+      JSON.stringify({
+        commissions: paginatedCommissionDetails,
+        total: allCommissionDetails.length, // Total number of referral earnings
+        totalPages: Math.ceil(allCommissionDetails.length / limit),
+        status: 200,
+      })
+    );
   } catch (error) {
     console.error("Error fetching referral earnings data:", error);
     throw new Error("Error fetching referral earnings data");
+  }
+};
+
+
+export const getUserPayoutSummary = async (userId: string) => {
+  try {
+    // Step 1: Connect to the database
+    await connectToDatabase();
+
+    // Step 2: Find all payouts associated with the user ID
+    const payouts = await Payout.find({ user: userId });
+
+    // Step 3: Calculate the total summed amount of all payouts
+    const totalAmount = payouts.reduce((sum, payout) => sum + payout.amount, 0);
+
+    // Step 4: Get the total number of payouts
+    const numberOfPayouts = payouts.length;
+
+    // Step 5: Return the total amount and number of payouts
+    return JSON.parse(
+      JSON.stringify({
+        totalAmount,
+        numberOfPayouts,
+        status: 200,
+        message: 'Payout summary fetched successfully',
+      })
+    );
+  } catch (error) {
+    console.error('Error fetching user payout summary:', error);
+    return JSON.parse(
+      JSON.stringify({
+        status: 400,
+        message: 'Error fetching user payout summary',
+      })
+    );
   }
 };

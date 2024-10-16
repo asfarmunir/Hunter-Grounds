@@ -1,6 +1,7 @@
+"use client";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 
 import {
@@ -24,6 +25,8 @@ import { IoChevronDownOutline, IoEyeOutline } from "react-icons/io5";
 import OrderDetails from "@/components/shared/modals/OrderDetails";
 import { IBooking } from "@/lib/types/booking";
 import Pagination from "./Pagination";
+import { useRouter, useSearchParams } from "next/navigation";
+import { formUrlQuery } from "@/lib/utils";
 
 const page = ({
   bookings,
@@ -36,6 +39,32 @@ const page = ({
   totalBookings: number;
   totalPages: number;
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Debounce delay in milliseconds
+  const debounceDelay = 250;
+
+  // Effect to handle the debounced search
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      const queryString = formUrlQuery({
+        params: searchParams.toString(),
+        key: "propertyName",
+        value: searchTerm ? searchTerm : null,
+      });
+
+      router.push(queryString, { scroll: false });
+    }, debounceDelay);
+
+    return () => clearTimeout(debounceTimer); // Cleanup timeout on component unmount or when searchTerm changes
+  }, [searchTerm, searchParams, router]);
+
+  // Input change handler
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
   return (
     <div className=" w-full px-7 md:px-8 2xl:px-20 bg-[#000214]  mt-7 2xl-mt-8">
       <p className=" font-thin text-primary-50 mb-1 2xl:text-lg">
@@ -43,8 +72,8 @@ const page = ({
       </p>
       <h1 className=" text-4xl 2xl:text-5xl font-bold">Booking Orders</h1>
       <div className=" w-full rounded-3xl  bg-primary-100 mt-6 2xl:mt-8">
-        {/* <div className=" w-full p-2.5 2xl:p-3.5 flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
-          <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-1.5">
+        <div className=" w-full p-2.5 2xl:p-3.5 flex  flex-col-reverse md:flex-row gap-6 items-center justify-end">
+          {/* <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-1.5">
             <DropdownMenu>
               <DropdownMenuTrigger className=" bg-[#FF990033] border border-primary-50/30 text-primary-50   justify-center text-nowrap w-full md:w-fit  text-xs 2xl:text-sm px-3 md:px-4 py-3 font-semibold rounded-full inline-flex items-center gap-1.5">
                 Order Status
@@ -63,7 +92,7 @@ const page = ({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>{" "}
-          </div>
+          </div> */}
           <div className="flex items-center flex-wrap gap-2.5">
             <div className=" bg-[#372f2f4b] inline-flex  w-full md:w-fit items-center px-2 rounded-xl border border-[#372f2f]">
               <LuSearch className="w-4 h-4 text-[#848BAC] " />
@@ -80,15 +109,13 @@ const page = ({
                 focus:border-none
                 placeholder-slate-900 
                 "
-                placeholder={"search..."}
+                value={searchTerm}
+                onChange={handleSearchChange}
+                placeholder={"search property..."}
               />
             </div>
-
-            <button className="bg-[#FF990033] border border-primary-50/30 text-primary-50 p-3 capitalize rounded-full text-xs font-semibold ">
-              toggle colomn
-            </button>
           </div>
-        </div> */}
+        </div>
         <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-[#000214]">
           <Table className=" bg-background">
             <TableHeader className=" mb-1 ">
@@ -122,7 +149,7 @@ const page = ({
               </TableRow>
             </TableHeader>
             <TableBody className="   ">
-              {bookings.length ? (
+              {bookings && bookings.length ? (
                 bookings.map((booking, i) => (
                   <TableRow key={i} className=" border-y-4 border-[#000214]  ">
                     <TableCell className=" text-xs  text-white border-y-4 border-[#000214] rounded-tl-full rounded-bl-full bg-[#372f2fd4]   2xl:text-sm font-semibold">

@@ -16,9 +16,12 @@ const page = async ({ searchParams }: SearchParamProps) => {
   }
   const page = Number(searchParams?.page) || 1;
 
+  const propertyName = searchParams?.propertyName as string;
+
   const bookings = await getAllBookings({
     limit: 8,
     page,
+    propertyName,
   });
   return (
     <Bookings

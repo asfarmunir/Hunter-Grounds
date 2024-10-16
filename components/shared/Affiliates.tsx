@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,8 +11,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import EditLogs from "@/components/shared/userDetails/EditLogs";
 import Link from "next/link";
+import Pagination from "./Pagination";
+import { LuSearch } from "react-icons/lu";
+import { formUrlQuery } from "@/lib/utils";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface comissions {
   amount: number;
@@ -22,11 +25,19 @@ interface comissions {
 }
 
 const page = ({
+  affiliatePage,
+  commisionPage,
+  totalAffiliatePages,
   referralCommission,
   referralBookings,
+  totalCommissionPages,
 }: {
   referralCommission: comissions[];
   referralBookings: any;
+  affiliatePage: number;
+  commisionPage: number;
+  totalAffiliatePages: number;
+  totalCommissionPages: number;
 }) => {
   return (
     <div className=" w-full px-7 mt-7 2xl-mt-8 md:px-20 bg-[#000214] overflow-hidden ">
@@ -123,8 +134,16 @@ const page = ({
         </div>
       </div>
       <div className="flex items-start flex-col md:flex-row justify-center gap-4">
-        <LatestRegisteredAffiliates data={referralBookings} />
-        <LatestCommisions data={referralCommission} />
+        <LatestRegisteredAffiliates
+          data={referralBookings}
+          affiliatePage={affiliatePage}
+          totalAffiliatePages={totalAffiliatePages}
+        />
+        <LatestCommisions
+          data={referralCommission}
+          commisionPage={commisionPage}
+          totalCommissionPages={totalCommissionPages}
+        />
       </div>
     </div>
   );
@@ -132,14 +151,68 @@ const page = ({
 
 export default page;
 
-const LatestRegisteredAffiliates = ({ data }: { data: any[] }) => {
+const LatestRegisteredAffiliates = ({
+  data,
+  affiliatePage,
+  totalAffiliatePages,
+}: {
+  data: any[];
+  affiliatePage: number;
+  totalAffiliatePages: number;
+}) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Debounce delay in milliseconds
+  const debounceDelay = 50;
+
+  // Effect to handle the debounced search
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      const queryString = formUrlQuery({
+        params: searchParams.toString(),
+        key: "affiliateName",
+        value: searchTerm ? searchTerm : null,
+      });
+
+      router.push(queryString, { scroll: false });
+    }, debounceDelay);
+
+    return () => clearTimeout(debounceTimer); // Cleanup timeout on component unmount or when searchTerm changes
+  }, [searchTerm, searchParams, router]);
+
+  // Input change handler
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
   return (
     <div className=" w-full rounded-3xl bg-[#372F2F99]  mt-6 2xl:mt-8">
       <div className=" w-full p-2.5 2xl:p-3.5  flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
-        <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-1.5">
+        <div className="flex flex-col md:flex-row w-full   items-center justify-between gap-1.5">
           <h3 className="font-semibold pl-4 py-4">
             Latest Registered Affiliates
           </h3>
+          <div className=" bg-[#372f2f4b] inline-flex  w-full md:w-fit items-center px-2 rounded-xl border-2 border-primary-50/30">
+            <LuSearch className="w-4 h-4 text-[#848BAC] " />
+            <Input
+              className=" 
+                text-[#848BAC]
+                bg-transparent
+                border-none
+                focus:outline-none
+                w-full
+                md:w-fit
+                focus:ring-0
+                text-xs
+                focus:border-none
+                placeholder-slate-900 
+                "
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder={"search affiliate..."}
+            />
+          </div>
         </div>
       </div>
       <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-[#000214]">
@@ -163,7 +236,7 @@ const LatestRegisteredAffiliates = ({ data }: { data: any[] }) => {
           <TableBody>
             {data.map((item, i) => (
               <TableRow key={i} className=" border-none">
-                <TableCell className=" text-xs  text-white  rounded-tl-full rounded-bl-full  bg-primary-200  2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white border-y-4 border-primary   rounded-tl-full rounded-bl-full  bg-primary-200  2xl:text-sm font-semibold">
                   <div className="flex items-center gap-4">
                     <div className=" w-[35px] overflow-hidden rounded-full flex items-center justify-center h-[35px]">
                       <Image
@@ -179,13 +252,13 @@ const LatestRegisteredAffiliates = ({ data }: { data: any[] }) => {
                     <p>{item?.username}</p>
                   </div>
                 </TableCell>
-                <TableCell className=" text-xs  text-white    bg-primary-200  2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white border-y-4 border-primary     bg-primary-200  2xl:text-sm font-semibold">
                   {item?.email}
                 </TableCell>
-                <TableCell className=" text-xs  text-white    bg-primary-200  2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white border-y-4 border-primary     bg-primary-200  2xl:text-sm font-semibold">
                   ${item?.totalBookingAmount / 100}
                 </TableCell>
-                <TableCell className=" text-xs   rounded-tr-full rounded-br-full text-white   bg-primary-200  2xl:text-sm font-semibold">
+                <TableCell className=" text-xs   rounded-tr-full rounded-br-full text-white border-y-4 border-primary    bg-primary-200  2xl:text-sm font-semibold">
                   <p className=" capitalize w-fit px-4 py-2 rounded-full bg-[#FF990033]/20 dark:border-slate-700 border-slate-200 border">
                     Paid
                   </p>
@@ -197,16 +270,77 @@ const LatestRegisteredAffiliates = ({ data }: { data: any[] }) => {
         {data.length === 0 && (
           <p className=" w-full text-center  py-4">No affiliates yet</p>
         )}
+        <div className="flex items-center justify-end my-3">
+          <Pagination
+            page={affiliatePage}
+            totalPages={totalAffiliatePages}
+            urlParamName="affiliatePage"
+          />
+        </div>
       </div>
     </div>
   );
 };
-const LatestCommisions = ({ data }: { data: comissions[] }) => {
+const LatestCommisions = ({
+  data,
+  commisionPage,
+  totalCommissionPages,
+}: {
+  data: comissions[];
+  commisionPage: number;
+  totalCommissionPages: number;
+}) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Debounce delay in milliseconds
+  const debounceDelay = 50;
+
+  // Effect to handle the debounced search
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      const queryString = formUrlQuery({
+        params: searchParams.toString(),
+        key: "commissionateName",
+        value: searchTerm ? searchTerm : null,
+      });
+
+      router.push(queryString, { scroll: false });
+    }, debounceDelay);
+
+    return () => clearTimeout(debounceTimer); // Cleanup timeout on component unmount or when searchTerm changes
+  }, [searchTerm, searchParams, router]);
+
+  // Input change handler
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
   return (
     <div className=" w-full rounded-3xl bg-[#372F2F99]  mt-6 2xl:mt-8">
       <div className=" w-full p-2.5 2xl:p-3.5  flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
-        <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-1.5">
+        <div className="flex flex-col md:flex-row w-full   items-center justify-between gap-1.5">
           <h3 className="font-semibold pl-4 py-4">Latest Commisions</h3>
+          <div className=" bg-[#372f2f4b] inline-flex  w-full md:w-fit items-center px-2 rounded-xl border-2 border-primary-50/30">
+            <LuSearch className="w-4 h-4 text-[#848BAC] " />
+            <Input
+              className=" 
+                text-[#848BAC]
+                bg-transparent
+                border-none
+                focus:outline-none
+                w-full
+                md:w-fit
+                focus:ring-0
+                text-xs
+                focus:border-none
+                placeholder-slate-900 
+                "
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder={"search affiliate..."}
+            />
+          </div>
         </div>
       </div>
       <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-[#000214]">
@@ -230,7 +364,7 @@ const LatestCommisions = ({ data }: { data: comissions[] }) => {
           <TableBody>
             {data.map((item, i) => (
               <TableRow key={i} className=" border-none">
-                <TableCell className=" text-xs  text-white  rounded-tl-full rounded-bl-full  bg-primary-200  2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white border-y-4 border-primary  rounded-tl-full rounded-bl-full  bg-primary-200  2xl:text-sm font-semibold">
                   <div className="flex items-center gap-4">
                     <div className=" w-[35px] overflow-hidden rounded-full flex items-center justify-center h-[35px]">
                       <Image
@@ -246,13 +380,13 @@ const LatestCommisions = ({ data }: { data: comissions[] }) => {
                     <p>{item?.username}</p>
                   </div>
                 </TableCell>
-                <TableCell className=" text-xs  text-white    bg-primary-200  2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white border-y-4 border-primary    bg-primary-200  2xl:text-sm font-semibold">
                   {item?.email}
                 </TableCell>
-                <TableCell className=" text-xs  text-white    bg-primary-200  2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white border-y-4 border-primary    bg-primary-200  2xl:text-sm font-semibold">
                   ${item?.amount / 100}
                 </TableCell>
-                <TableCell className=" text-xs   rounded-tr-full rounded-br-full text-white   bg-primary-200  2xl:text-sm font-semibold">
+                <TableCell className=" text-xs   rounded-tr-full rounded-br-full text-white border-y-4 border-primary   bg-primary-200  2xl:text-sm font-semibold">
                   <p className=" capitalize w-fit px-4 py-2 rounded-full bg-[#FF990033]/20 dark:border-slate-700 border-slate-200 border">
                     Paid
                   </p>
@@ -264,6 +398,13 @@ const LatestCommisions = ({ data }: { data: comissions[] }) => {
         {data.length === 0 && (
           <p className=" w-full text-center  py-4">No commisions yet</p>
         )}
+        <div className="flex items-center justify-end my-3">
+          <Pagination
+            page={commisionPage}
+            totalPages={totalCommissionPages}
+            urlParamName="commisionPage"
+          />
+        </div>
       </div>
     </div>
   );

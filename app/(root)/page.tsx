@@ -50,10 +50,20 @@ const page = async () => {
                 +1.5%
               </p>
             </div>
-
-            <div className="w-full h-7 mb-4 rounded-full bg-[#372F2F99]">
-              <div className="w-[60%] bg-[#FF9900] rounded-full h-full"></div>
-            </div>
+            {stats.totalBookingPaymentsLastMonth && (
+              <div className="w-full h-7 mb-4 rounded-full bg-[#372F2F99]">
+                {/* Calculate width percentage based on totalBookingPaymentsLastMonth out of 1000 */}
+                <div
+                  className="bg-[#FF9900] rounded-full h-full"
+                  style={{
+                    width: `${Math.min(
+                      (stats.totalBookingPaymentsLastMonth / 100000) * 10,
+                      100
+                    )}%`, // Ensure the width doesn't exceed 100%
+                  }}
+                ></div>
+              </div>
+            )}
 
             <div className="w-full flex items-center justify-between">
               <div className="flex flex-col gap-1">
@@ -66,10 +76,20 @@ const page = async () => {
                 +1.5%
               </p>
             </div>
-
-            <div className="w-full h-7 mb-4 rounded-full bg-[#372F2F99]">
-              <div className="w-[40%] bg-[#FF9900] rounded-full h-full"></div>
-            </div>
+            {stats.totalBookingPayments && (
+              <div className="w-full h-7 mb-4 rounded-full bg-[#372F2F99]">
+                {/* Calculate width percentage based on totalBookingPayments out of 1000 */}
+                <div
+                  className="bg-[#FF9900] rounded-full h-full"
+                  style={{
+                    width: `${Math.min(
+                      (stats.totalBookingPayments / 100000) * 100,
+                      100
+                    )}%`, // Ensure the width doesn't exceed 100%
+                  }}
+                ></div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -89,9 +109,9 @@ const page = async () => {
                 </span>
               )}
             </h3>
-            <p className="text-xs 2xl:text-sm text-green-500 font-semibold">
+            {/* <p className="text-xs 2xl:text-sm text-green-500 font-semibold">
               {salesGrowth > 0 ? "+" : "-"}18% Total to pay
-            </p>
+            </p> */}
             <Image
               src="/images/graph.svg"
               width={100}

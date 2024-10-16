@@ -4,6 +4,7 @@ import { getUserDetails } from "@/lib/database/actions/user.action";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { getUserPayoutSummary } from "@/lib/database/actions/payout.action";
 
 const page = async ({ params: { id } }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions);
@@ -11,8 +12,9 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
     redirect("/");
   }
   const user = await getUserDetails(id);
-  console.log("🚀 ~ page ~ user:", user);
-  return <CustomerDetails user={user.user} />;
+  const payoutSummary = await getUserPayoutSummary(id);
+  console.log("🚀 ~ page ~ payoutSummary:", payoutSummary);
+  return <CustomerDetails user={user.user} payoutSummary={payoutSummary} />;
 };
 
 export default page;

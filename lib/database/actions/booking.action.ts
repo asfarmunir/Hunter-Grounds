@@ -107,28 +107,67 @@ export const getTopPropertiesByOwner = async (userId: string) => {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+// export const getAllBookings = async (
+//   { limit, page }: { limit: number; page: number }
+// ) => {
+//     try {
+//         await connectToDatabase();
+//     const skipAmount = (Number(page) - 1) * limit;
+
+//         const bookings = await Booking.find().populate('property').skip(skipAmount)
+//       .limit(limit);
+
+//     const bookingCount = await Booking.countDocuments(); // Count based on the same query
+
+//         return JSON.parse(JSON.stringify({bookings,
+//            status: 200,
+//            totalBookings: bookingCount,
+//         totalPages: Math.ceil(bookingCount / limit),
+//         }));
+//     } catch (error) {
+//         console.error("Error getting all bookings", error);
+//         return JSON.parse(JSON.stringify({status: 400, message: "Error getting all bookings"}));
+//     }
+// }
+
 export const getAllBookings = async (
-  { limit, page }: { limit: number; page: number }
+  { limit, page, propertyName }: { limit: number; page: number; propertyName: string }
 ) => {
-    try {
-        await connectToDatabase();
+  try {
+    await connectToDatabase();
     const skipAmount = (Number(page) - 1) * limit;
 
-        const bookings = await Booking.find().populate('property').skip(skipAmount)
-      .limit(limit);
-
-    const bookingCount = await Booking.countDocuments(); // Count based on the same query
-
-        return JSON.parse(JSON.stringify({bookings,
-           status: 200,
-           totalBookings: bookingCount,
-        totalPages: Math.ceil(bookingCount / limit),
-        }));
-    } catch (error) {
-        console.error("Error getting all bookings", error);
-        return JSON.parse(JSON.stringify({status: 400, message: "Error getting all bookings"}));
+    let query = {};
+    if (propertyName && propertyName.trim()) {
+      query = { name: { $regex: new RegExp(propertyName, "i") } };
     }
-}
+
+    // First, populate the `property` field and then filter the bookings based on the populated property name
+    const bookings = await Booking.find()
+      .populate({
+        path: "property", // Populate the property field
+        match: query, // Apply the name filtering after population
+      })
+      .skip(skipAmount)
+      .limit(limit)
+      .exec();
+
+    // Filter out bookings where the property doesn't match the search criteria
+    const filteredBookings = bookings.filter(booking => booking.property !== null);
+
+    const bookingCount = filteredBookings.length;
+
+    return JSON.parse(JSON.stringify({
+      bookings: filteredBookings,
+      status: 200,
+      totalBookings: bookingCount,
+      totalPages: Math.ceil(bookingCount / limit),
+    }));
+  } catch (error) {
+    console.error("Error getting all bookings", error);
+    return JSON.parse(JSON.stringify({ status: 400, message: "Error getting all bookings" }));
+  }
+};
 
 
 
