@@ -27,6 +27,8 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { MoonLoader } from "react-spinners";
+import { verifyCaptcha } from "@/lib/database/actions/user.action";
+import { getCaptchaToken } from "@/lib/captcha";
 
 const formSchema = z.object({
   email: z.string().min(2, { message: "Email is required" }),
@@ -51,6 +53,15 @@ const AddClient = ({
   const router = useRouter();
   async function onSubmit(values: any) {
     setLoading(true);
+    const token = await getCaptchaToken();
+
+    const captchaResponse = await verifyCaptcha(token);
+
+    if (!captchaResponse.success) {
+      toast.error(captchaResponse.message);
+      setLoading(false);
+      return;
+    }
     const { email, password } = values;
     const res = await signIn("credentials", {
       email,

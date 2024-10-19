@@ -1,13 +1,6 @@
 "use client";
 
 import React from "react";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -27,17 +20,15 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { MoonLoader } from "react-spinners";
+import { getCaptchaToken } from "@/lib/captcha";
+import { verifyCaptcha } from "@/lib/database/actions/user.action";
 
 const formSchema = z.object({
   email: z.string().min(2, { message: "Email is required" }),
   password: z.string().min(2, { message: "Password is required" }),
 });
 
-const AddClient = ({
-  loginRef,
-}: {
-  loginRef: React.LegacyRef<HTMLButtonElement>;
-}) => {
+const AddClient = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const form = useForm({
@@ -51,6 +42,17 @@ const AddClient = ({
   const router = useRouter();
   async function onSubmit(values: any) {
     setLoading(true);
+
+    const token = await getCaptchaToken();
+
+    const captchaResponse = await verifyCaptcha(token);
+
+    if (!captchaResponse.success) {
+      toast.error(captchaResponse.message);
+      setLoading(false);
+      return;
+    }
+
     const { email, password } = values;
     const res = await signIn("credentials", {
       email,

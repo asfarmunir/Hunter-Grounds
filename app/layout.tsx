@@ -5,6 +5,7 @@ import NextTopLoader from "nextjs-toploader";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import AuthSessionProvider from "@/lib/AuthProvider";
 import { Toaster } from "react-hot-toast";
+import Script from "next/script";
 // import AuthSessionProvider from "@/lib/AuthSession";
 
 const urbanist = Urbanist({
@@ -34,6 +35,11 @@ export default function RootLayout({
     <html lang="en">
       <AuthSessionProvider>
         <body className={lexend.variable}>
+          <Script
+            strategy="beforeInteractive"
+            src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY}`}
+          />
+
           <NextTopLoader
             color="orange"
             initialPosition={0.08}

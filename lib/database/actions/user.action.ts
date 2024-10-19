@@ -152,6 +152,7 @@ export const getUserDetails = async (id: string) => {
 
 
 import { startOfWeek, endOfWeek,  startOfYear, endOfYear, subWeeks, subYears } from "date-fns";
+import { verifyCaptchaToken } from "@/lib/captcha";
 
 
 export const calculateBookingPaymentStats = async (timePeriod?: string) => {
@@ -285,4 +286,43 @@ export const calculateBookingPaymentStats = async (timePeriod?: string) => {
     };
   }
 };
+
+
+
+
+export async function verifyCaptcha(
+  token: string | null,
+) {
+  if (!token) {
+    return {
+      success: false,
+      message: "CAPTCHA Token not found",
+    };
+  }
+
+  // Verify the token
+  const captchaData = await verifyCaptchaToken(token);
+
+  if (!captchaData) {
+    return {
+      success: false,
+      message: "Captcha Verification Failed",
+    };
+  }
+
+  if (!captchaData.success || captchaData.score < 0.5) {
+    return {
+      success: false,
+      message: "Captcha Verification Failed",
+      errors: !captchaData.success ? captchaData["error-codes"] : undefined,
+    };
+  }
+  return {
+    success: true,
+    message: "verified!",
+  };
+}
+
+
+
 
