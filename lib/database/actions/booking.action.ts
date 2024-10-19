@@ -131,44 +131,76 @@ export const getTopPropertiesByOwner = async (userId: string) => {
 // }
 
 export const getAllBookings = async (
-  { limit, page, propertyName }: { limit: number; page: number; propertyName: string }
+  { limit, page, propertyName, period }: { limit: number; page: number; propertyName?: string; period?: 'upcoming' | 'completed' }
 ) => {
   try {
     await connectToDatabase();
     const skipAmount = (Number(page) - 1) * limit;
 
-    let query = {};
+    // Create the base query object for searching properties
+    let propertyQuery = {};
     if (propertyName && propertyName.trim()) {
-      query = { name: { $regex: new RegExp(propertyName, "i") } };
+      propertyQuery = { name: { $regex: new RegExp(propertyName, "i") } };
     }
 
-    // First, populate the `property` field and then filter the bookings based on the populated property name
-    const bookings = await Booking.find()
+    // First, find all matching properties based on the search query
+    const matchingProperties = await Property.find(propertyQuery).select("_id");
+
+    // If no matching properties are found, return an empty response
+    if (matchingProperties.length === 0) {
+      return JSON.parse(
+        JSON.stringify({
+          bookings: [],
+          status: 200,
+          totalBookings: 0,
+          totalPages: 0,
+        })
+      );
+    }
+
+    // If there are matching properties, use their IDs to search the bookings
+    const propertyIds = matchingProperties.map((property) => property._id);
+    const bookingQuery: any = { property: { $in: propertyIds } }; // Use 'any' to allow dynamic queries
+
+    // Determine the date for filtering bookings based on the period
+    const today = new Date();
+
+    if (period === 'completed') {
+      // For completed bookings, select those with checkOut dates before today
+      bookingQuery.checkOut = { $lt: today };
+    } else if (period === 'upcoming') {
+      // For upcoming bookings, select those with checkOut dates on or after today
+      bookingQuery.checkOut = { $gte: today };
+    }
+    // If period is undefined, no additional filtering is needed
+
+    // Count the total number of bookings that match the query
+    const totalBookings = await Booking.countDocuments(bookingQuery);
+
+    // Fetch bookings with pagination
+    const bookings = await Booking.find(bookingQuery)
       .populate({
         path: "property", // Populate the property field
-        match: query, // Apply the name filtering after population
+        select: "name pricePerNight", // Optionally select specific fields
       })
       .skip(skipAmount)
       .limit(limit)
       .exec();
 
-    // Filter out bookings where the property doesn't match the search criteria
-    const filteredBookings = bookings.filter(booking => booking.property !== null);
-
-    const bookingCount = filteredBookings.length;
-
-    return JSON.parse(JSON.stringify({
-      bookings: filteredBookings,
-      status: 200,
-      totalBookings: bookingCount,
-      totalPages: Math.ceil(bookingCount / limit),
-    }));
+    // Return the paginated and filtered result
+    return JSON.parse(
+      JSON.stringify({
+        bookings,
+        status: 200,
+        totalBookings,
+        totalPages: Math.ceil(totalBookings / limit),
+      })
+    )
   } catch (error) {
     console.error("Error getting all bookings", error);
-    return JSON.parse(JSON.stringify({ status: 400, message: "Error getting all bookings" }));
+    return { status: 400, message: "Error getting all bookings" };
   }
 };
-
 
 
 

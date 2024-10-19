@@ -6,13 +6,21 @@ import Image from "next/image";
 import React from "react";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-
-const page = async () => {
+import PaymentPeriodFilter from "@/components/shared/PaymentsPeriodFilter";
+const page = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
   }
-  const stats = await calculateBookingPaymentStats();
+
+  const timePeriod = searchParams?.period as string | undefined;
+  console.log("🚀 ~ page ~ timePeriod:", timePeriod);
+  const stats = await calculateBookingPaymentStats(timePeriod);
+  console.log("🚀 ~ page ~ stats:", stats);
   const totalPayment = await calculateTotalBookingAmount();
 
   // Helper function to format currency
@@ -69,12 +77,13 @@ const page = async () => {
               <div className="flex flex-col gap-1">
                 <p className="2xl:text-lg font-thin">Total Sales</p>
                 <h1 className="text-3xl 2xl:text-4xl font-bold">
-                  ${formatCurrency(stats.totalBookingPayments || 0)}
+                  $
+                  {stats.bookingPaymentsInPeriod === null
+                    ? formatCurrency(stats.totalBookingPayments || 0)
+                    : formatCurrency(stats.bookingPaymentsInPeriod || 0)}
                 </h1>
               </div>
-              <p className="bg-[#00C88C1A] px-4 py-2.5 text-xs font-semibold rounded-full text-center text-green-600">
-                +1.5%
-              </p>
+              <PaymentPeriodFilter />
             </div>
             {stats.totalBookingPayments && (
               <div className="w-full h-7 mb-4 rounded-full bg-[#372F2F99]">

@@ -138,6 +138,13 @@ const page = ({
                     </TableCell>
                   </TableRow>
                 ))}
+              {!users?.length && (
+                <TableRow>
+                  <TableCell colSpan={9} className="text-center">
+                    No Data Available
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>

@@ -9,8 +9,9 @@ export interface IProperty {
   gameAvailable: string;
   pricePerNight: number;
   city: string;
-  owner: string;
+  owner:  { firstname: string; lastname: string; email: string };
   bookedDates: string[];
   location: { latitude: number; longitude: number };
   reviews: { user: string; review: string, rating:number }[];
+  createdAt: Date,
 }

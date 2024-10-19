@@ -13,20 +13,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { BsArrowRightCircle, BsArrowLeftCircle } from "react-icons/bs";
-import { IoChevronDownOutline, IoEyeOutline } from "react-icons/io5";
-import OrderDetails from "@/components/shared/modals/OrderDetails";
 import { IBooking } from "@/lib/types/booking";
 import Pagination from "./Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formUrlQuery } from "@/lib/utils";
+import BookingFilter from "./BookingFilter";
 
 const page = ({
   bookings,
@@ -39,8 +30,9 @@ const page = ({
   totalBookings: number;
   totalPages: number;
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const searchParams = useSearchParams();
+  const propertyName = searchParams.get("propertyName");
+  const [searchTerm, setSearchTerm] = useState(propertyName || "");
   const router = useRouter();
 
   // Debounce delay in milliseconds
@@ -93,6 +85,7 @@ const page = ({
               </DropdownMenuContent>
             </DropdownMenu>{" "}
           </div> */}
+          <BookingFilter />
           <div className="flex items-center flex-wrap gap-2.5">
             <div className=" bg-[#372f2f4b] inline-flex  w-full md:w-fit items-center px-2 rounded-xl border border-[#372f2f]">
               <LuSearch className="w-4 h-4 text-[#848BAC] " />
@@ -128,6 +121,9 @@ const page = ({
                 </TableHead>
                 <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   Dates
+                </TableHead>
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
+                  Number of Nights
                 </TableHead>
                 <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   Booked By
@@ -172,12 +168,20 @@ const page = ({
                            )}`
                         : "N/A"}
                     </TableCell>
-
+                    <TableCell className=" bg-[#372f2fd4]  border-y-4 border-[#000214]  ">
+                      {booking.checkIn && booking.checkOut
+                        ? `${Math.ceil(
+                            (new Date(booking.checkOut).getTime() -
+                              new Date(booking.checkIn).getTime()) /
+                              (1000 * 60 * 60 * 24)
+                          )} nights`
+                        : "N/A"}
+                    </TableCell>
                     <TableCell className=" text-xs  text-white capitalize bg-[#372f2fd4]  border-y-4 border-[#000214]   2xl:text-sm font-semibold">
                       {booking.bookingFirstname + " " + booking.bookingLastname}
                     </TableCell>
                     <TableCell className=" text-xs text-center  text-white bg-[#372f2fd4]  border-y-4 border-[#000214]   2xl:text-sm font-semibold">
-                      {booking.property?.pricePerNight}
+                      ${booking.property?.pricePerNight}
                     </TableCell>
 
                     <TableCell className=" text-xs   text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">

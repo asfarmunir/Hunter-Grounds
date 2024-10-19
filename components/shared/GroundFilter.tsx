@@ -7,19 +7,19 @@ import { formUrlQuery } from "@/lib/utils";
 
 const CustomersFilter = () => {
   const searchParams = useSearchParams();
-  const name = searchParams.get("name");
-  const [searchTerm, setSearchTerm] = useState(name || "");
+  const propertyName = searchParams.get("propertyName");
+  const [searchTerm, setSearchTerm] = useState(propertyName || "");
   const router = useRouter();
 
   // Debounce delay in milliseconds
-  const debounceDelay = 250;
+  const debounceDelay = 100;
 
   // Effect to handle the debounced search
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       const queryString = formUrlQuery({
         params: searchParams.toString(),
-        key: "name",
+        key: "propertyName",
         value: searchTerm ? searchTerm : null,
       });
 
@@ -52,7 +52,7 @@ const CustomersFilter = () => {
           text-xs
           focus:border-none
           placeholder-slate-900"
-        placeholder="Search Customer..."
+        placeholder="Search ground..."
         value={searchTerm}
         onChange={handleSearchChange}
       />

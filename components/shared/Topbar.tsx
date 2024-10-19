@@ -11,6 +11,10 @@ const links = [
     href: "/",
   },
   {
+    name: "Grounds",
+    href: "/grounds",
+  },
+  {
     name: "Bookings",
     href: "/orders",
   },

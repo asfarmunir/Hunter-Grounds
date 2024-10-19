@@ -1,9 +1,10 @@
 import React from "react";
-import Bookings from "@/components/shared/Bookings";
-import { getAllBookings } from "@/lib/database/actions/booking.action";
+import { getAllUsers } from "@/lib/database/actions/user.action";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import Grounds from "@/components/shared/Grounds";
+import { getAllProperties } from "@/lib/database/actions/property.actions";
 
 type SearchParamProps = {
   params: { id: string };
@@ -15,22 +16,21 @@ const page = async ({ searchParams }: SearchParamProps) => {
     redirect("/");
   }
   const page = Number(searchParams?.page) || 1;
+  const propertyName = searchParams?.propertyName || undefined;
 
-  const propertyName = searchParams?.propertyName as string | undefined;
-  const period = searchParams?.period as "completed" | "upcoming" | undefined;
-  const bookings = await getAllBookings({
+  const properties = await getAllProperties({
     limit: 8,
     page,
     propertyName,
-    period,
   });
-  console.log("🚀 ~ page ~ getAllBookings:", getAllBookings);
+
+  console.log("🚀 ~ page ~ properties:", properties);
   return (
-    <Bookings
-      bookings={bookings.bookings}
-      totalBookings={bookings.totalBookings}
+    <Grounds
+      properties={properties.properties}
+      totalProperties={properties.totalProperties}
       page={page}
-      totalPages={bookings.totalPages}
+      totalPages={properties.totalPages!}
     />
   );
 };
