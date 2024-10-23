@@ -53,15 +53,15 @@ const AddClient = ({
   const router = useRouter();
   async function onSubmit(values: any) {
     setLoading(true);
-    const token = await getCaptchaToken();
+    // const token = await getCaptchaToken();
 
-    const captchaResponse = await verifyCaptcha(token);
+    // const captchaResponse = await verifyCaptcha(token);
 
-    if (!captchaResponse.success) {
-      toast.error(captchaResponse.message);
-      setLoading(false);
-      return;
-    }
+    // if (!captchaResponse.success) {
+    //   toast.error(captchaResponse.message);
+    //   setLoading(false);
+    //   return;
+    // }
     const { email, password } = values;
     const res = await signIn("credentials", {
       email,
