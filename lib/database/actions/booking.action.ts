@@ -225,3 +225,73 @@ export const calculateTotalBookingAmount = async () => {
     throw new Error("Error calculating total booking amount");
   }
 };
+
+
+
+
+export const deleteUserBooking = async (bookingId: string) => {
+  try {
+    await connectToDatabase();
+
+    // Fetch the booking
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      throw new Error("Booking not found");
+    }
+
+    const currentDate = new Date();
+
+    if (booking.checkIn <= currentDate) {
+      // If the check-in date has passed, delete the booking
+      await Booking.findByIdAndDelete(bookingId);
+    } else {
+      // If the check-in date is in the future, update bookedDates on the property
+      const property = await Property.findById(booking.property);
+      if (!property) {
+        throw new Error("Property associated with the booking not found");
+      }
+
+      // Remove the dates between checkIn and checkOut from the bookedDates array
+      const checkInDate = new Date(booking.checkIn);
+      const checkOutDate = new Date(booking.checkOut);
+      const bookedDatesToRemove: Date[] = [];
+
+      for (
+        let date = new Date(checkInDate);
+        date <= checkOutDate;
+        date.setDate(date.getDate() + 1)
+      ) {
+        bookedDatesToRemove.push(new Date(date)); // Collect dates to remove
+      }
+
+      
+
+      property.bookedDates = property.bookedDates.filter(
+        (date:any) =>
+          !bookedDatesToRemove.some(
+            (d) => new Date(d).toISOString() === new Date(date).toISOString()
+          )
+      );
+
+
+      // Save the updated property
+      await property.save();
+
+      // Delete the booking
+      await Booking.findByIdAndDelete(bookingId);
+    }
+
+    revalidatePath("/orders");
+    return {
+      message: "Booking deleted successfully.",
+      status: 200,
+    };
+  } catch (error: any) {
+    console.error("Error deleting booking:", error.message);
+    return {
+      message: "Error deleting booking.",
+      status: 400,
+      error: error.message,
+    };
+  }
+};

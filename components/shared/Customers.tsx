@@ -10,20 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { IoChevronDownOutline, IoEyeOutline } from "react-icons/io5";
-import OrderDetails from "@/components/shared/modals/OrderDetails";
 import Pagination from "./Pagination";
 import { IUser } from "@/lib/types/user";
 import { FaEye } from "react-icons/fa";
 import Link from "next/link";
 import CustomersFilter from "./CustomersFilter";
+import DeleteCustomer from "./DeleteCustomer";
 
 const page = ({
   users,
@@ -129,12 +121,15 @@ const page = ({
                         : "0"}
                     </TableCell>
                     <TableCell className=" text-xs text-center  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      <Link
-                        href={`/customerDetails/${user._id}`}
-                        className="bg-primary-50 text-white  flex items-center  justify-center w-8 h-8 rounded-full text-xs 2xl:text-sm font-semibold"
-                      >
-                        <FaEye className="w-4 h-4" />
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/customerDetails/${user._id}`}
+                          className="bg-primary-50 text-black  flex items-center  justify-center w-8 h-8 rounded-full text-xs 2xl:text-sm font-semibold"
+                        >
+                          <FaEye className="w-4 h-4" />
+                        </Link>
+                        <DeleteCustomer id={user._id!.toString()} />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

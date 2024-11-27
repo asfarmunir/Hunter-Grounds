@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { LuSearch } from "react-icons/lu";
+import { DateTime } from "luxon";
 
 import {
   Table,
@@ -18,7 +19,7 @@ import Pagination from "./Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formUrlQuery } from "@/lib/utils";
 import BookingFilter from "./BookingFilter";
-
+import DeleteBooking from "./DeleteBooking";
 const page = ({
   bookings,
   page,
@@ -139,8 +140,11 @@ const page = ({
                 <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   Amount Status
                 </TableHead>
-                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize rounded-tr-full rounded-br-full">
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   Amount Paid
+                </TableHead>
+                <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize rounded-tr-full rounded-br-full">
+                  Actions
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -152,22 +156,32 @@ const page = ({
                       {/* <OrderDetails /> */}
                       {booking._id?.slice(0, 6) + "..."}
                     </TableCell>
-
                     <TableCell className="bg-[#372f2fd4] capitalize border-y-4 border-[#000214]    ">
                       {booking.property?.name}
                     </TableCell>
                     <TableCell className=" bg-[#372f2fd4]  border-y-4 border-[#000214]  ">
                       {booking.checkIn && booking.checkOut
-                        ? `${new Date(booking.checkIn).toLocaleDateString(
-                            "en-US",
-                            { year: "numeric", month: "long", day: "numeric" }
-                          )} - 
-                           ${new Date(booking.checkOut).toLocaleDateString(
-                             "en-US",
-                             { year: "numeric", month: "long", day: "numeric" }
-                           )}`
+                        ? `
+                        
+                       
+                          ${DateTime.fromISO(booking.checkIn.toString(), {
+                            zone: "utc",
+                          }).toFormat("MMM dd, yyyy")}
+                          
+                          - 
+                              ${DateTime.fromISO(booking.checkOut.toString(), {
+                                zone: "utc",
+                              }).toFormat("MMM dd, yyyy")}
+                           `
                         : "N/A"}
                     </TableCell>
+
+                    {/*  removed dates 
+                    ${new Date(booking.checkOut).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })} */}
                     <TableCell className=" bg-[#372f2fd4]  border-y-4 border-[#000214]  ">
                       {booking.checkIn && booking.checkOut
                         ? `${Math.ceil(
@@ -183,7 +197,6 @@ const page = ({
                     <TableCell className=" text-xs text-center  text-white bg-[#372f2fd4]  border-y-4 border-[#000214]   2xl:text-sm font-semibold">
                       ${booking.property?.pricePerNight}
                     </TableCell>
-
                     <TableCell className=" text-xs   text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
                       {booking.bookingPhone}
                     </TableCell>
@@ -192,14 +205,17 @@ const page = ({
                         {booking.paymentStatus}
                       </p>
                     </TableCell>
-                    <TableCell className=" text-xs  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
+                    <TableCell className=" text-xs    text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
                       ${booking.totalAmount / 100}
+                    </TableCell>
+                    <TableCell className=" text-xs  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
+                      <DeleteBooking id={booking._id!.toString()} />
                     </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center">
+                  <TableCell colSpan={10} className="text-center">
                     No Data Available
                   </TableCell>
                 </TableRow>

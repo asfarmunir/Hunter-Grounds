@@ -20,12 +20,13 @@ const PayoutFilter = () => {
     setSelectedStatus(status);
 
     const queryString = formUrlQuery({
-      params: searchParams.toString(),
+      // params: searchParams.toString(),
+      params: "/orders",
       key: "period", // Example query key for status
       value: status === "ALL" ? null : status, // If 'ALL' is selected, we skip the query
     });
 
-    router.push(queryString, { scroll: false });
+    router.replace(queryString, { scroll: false });
   };
 
   return (

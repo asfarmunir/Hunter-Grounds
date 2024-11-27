@@ -25,8 +25,9 @@ const PropertySchema = new Schema(
     insurance: {
       type: String,
     },
-    gameAvailable: {
-      type: String, // Specify the type or name of the game available
+   gameAvailable: {
+      type: [String],
+      default: [],
     },
     pricePerNight: {
       type: Number,
@@ -34,6 +35,10 @@ const PropertySchema = new Schema(
     },
     bookedDates: {
       type: [Date], // Array to store the dates when the property is booked
+      default: [],
+    },
+     nonAvailableDates: {
+      type: [Date], // Array to store dates when the owner does not want to rent out the property
       default: [],
     },
     city:{
@@ -64,6 +69,10 @@ const PropertySchema = new Schema(
       ],
       default: [],
     },
+    extraServices: {
+      type: String,
+      default: "",
+    }
   },
   { timestamps: true }
 );

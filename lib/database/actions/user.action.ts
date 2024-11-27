@@ -153,6 +153,8 @@ export const getUserDetails = async (id: string) => {
 
 import { startOfWeek, endOfWeek,  startOfYear, endOfYear, subWeeks, subYears } from "date-fns";
 import { verifyCaptchaToken } from "@/lib/captcha";
+import Property from "../property.model";
+import { revalidatePath } from "next/cache";
 
 
 export const calculateBookingPaymentStats = async (timePeriod?: string) => {
@@ -322,6 +324,40 @@ export async function verifyCaptcha(
     message: "verified!",
   };
 }
+
+
+export const deleteUserAccount = async (id:string) => {
+
+  try {
+
+    await connectToDatabase();
+    const user = await User.findById(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const userProperties = await Property.deleteMany({ owner: user._id });
+    console.log(
+      `${userProperties.deletedCount} properties listed by the user were deleted.`
+    );
+    await User.findByIdAndDelete(id);
+    revalidatePath('/customers');
+    return {
+      message: "User Deleted Successfully",
+      status: 200
+    }
+  } 
+  catch (error) {
+    console.log(error);
+    return {
+      message:'error deleting user',
+      status: 400
+    }
+  }
+
+}
+      
+
+
 
 
 

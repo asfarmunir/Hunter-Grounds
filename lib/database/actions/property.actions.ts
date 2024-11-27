@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "..";
 import Property from "../property.model";
 
@@ -44,3 +45,23 @@ export const getAllProperties = async (
     return { status: 400, message: "Error getting all properties" };
   }
 };
+
+
+export const deletePropertyById = async (id:string) => {
+
+  try {
+    await connectToDatabase();
+    await Property.findByIdAndDelete(id);
+    revalidatePath('/grounds')
+    return {
+      message: "Property Deleted Successfully",
+      status: 200
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      message:'error deleting property',
+      status: 500
+    }
+  }
+}

@@ -1,7 +1,3 @@
-import { Input } from "@/components/ui/input";
-import React from "react";
-import { LuSearch } from "react-icons/lu";
-
 import {
   Table,
   TableBody,
@@ -10,10 +6,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTrigger,
+  AlertDialogCancel,
+} from "@/components/ui/alert-dialog";
 
 import Pagination from "./Pagination";
 import { IProperty } from "@/lib/types/property";
 import GroundFilter from "./GroundFilter";
+import { FaEye } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import Image from "next/image";
+import { IoClose } from "react-icons/io5";
+import Delete from "./Delete";
 
 const page = ({
   properties,
@@ -63,8 +70,11 @@ const page = ({
                 <TableHead className="text-sm text-center  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   Location
                 </TableHead>
-                <TableHead className="text-sm text-center  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize rounded-tr-full rounded-br-full">
+                <TableHead className="text-sm text-center  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   Price per night
+                </TableHead>
+                <TableHead className="text-sm text-center  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize rounded-tr-full rounded-br-full">
+                  Action
                 </TableHead>
                 {/* <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize rounded-tr-full rounded-br-full">
                   Actions
@@ -105,17 +115,39 @@ const page = ({
                     <TableCell className="bg-[#372f2fd4] text-center border-y-4 truncate max-w-[150px] border-[#000214]  ">
                       {p.address || "N/A"}
                     </TableCell>
-                    <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214] rounded-tr-full rounded-br-full   ">
+                    <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214] ">
                       ${p.pricePerNight ? p.pricePerNight : "N/A"}
                     </TableCell>
-                    {/* <TableCell className=" text-xs text-center  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      <Link
-                        href={`/customerDetails/${p._id}`}
-                        className="bg-primary-50 text-white  flex items-center  justify-center w-8 h-8 rounded-full text-xs 2xl:text-sm font-semibold"
-                      >
-                        <FaEye className="w-4 h-4" />
-                      </Link>
-                    </TableCell> */}
+                    <TableCell className=" text-xs text-center  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
+                      {/* <AlertDialog>
+                        <AlertDialogTrigger className="bg-primary-50 hover:bg-primary-50/50 transition-colors   flex items-center  justify-center w-8 h-8 rounded-full text-xs 2xl:text-sm font-semibold">
+                          <MdDelete className="w-5 h-5 text-black" />
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className="p-0 pb-10 transition-all dark:bg-[#161313CC] border-none 2xl:min-w-[600px]">
+                          <AlertDialogCancel className="w-fit absolute right-3 rounded-full border-none dark:bg-[#161313CC] top-3">
+                            <IoClose className="w-5 h-5 text-white" />
+                          </AlertDialogCancel>
+                          <div className="p-6 flex flex-col items-center">
+                            <h1 className="text-2xl border-b-2 px-8 border-primary-50/50 pb-3 font-semibold text-center mb-6">
+                              Delete Huntground?
+                            </h1>
+                            <p className=" text-center">
+                              Are you sure to delete this data, it will be
+                              deleted permenently and cannot be recovered.
+                            </p>
+                            <div className=" w-full flex items-center gap-4 mt-4">
+                              <AlertDialogCancel className="w-full  bg-white text-black rounded-lg text-lg  ">
+                                Cancel
+                              </AlertDialogCancel>
+                              <button className=" w-full py-2 rounded-lg bg-primary-50 text-black ">
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </AlertDialogContent>
+                      </AlertDialog> */}
+                      <Delete id={p._id} />
+                    </TableCell>
                   </TableRow>
                 ))}
 
