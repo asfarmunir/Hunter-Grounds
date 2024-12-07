@@ -5,6 +5,8 @@ import Payout from "../payout.model";
 import User from "../user.modal";
 import Booking from "../booking.model";
 import { sendEmail } from "@/lib/sendEmail";
+import { payoutSuccessTemplate } from "@/lib/template/payoutSuccess";
+import { payoutRejectTemplate } from "@/lib/template/payoutReject";
 
 
 //----------------------------------------------------------------
@@ -62,7 +64,21 @@ export const updatePayoutStatus = async (id: string, status: string) => {
 
         // Send an email to the user informing them of the status update
         const subject = `Your Payout Status Has Been Updated to ${status}`;
-        const emailTemplate = generatePayoutEmailTemplate(payout.user.firstname, payout.amount, status);
+        // const emailTemplate = generatePayoutEmailTemplate(payout.user.firstname, payout.amount, status);
+
+        let emailTemplate = "";
+
+        if(status === "completed"){
+
+          emailTemplate = payoutSuccessTemplate(payout.amount).template
+
+        } else if(status === "rejected"){
+
+          emailTemplate = payoutRejectTemplate().template
+        }
+
+
+
         await sendEmail(
             payout.user.email
           , subject, emailTemplate);
@@ -76,21 +92,21 @@ export const updatePayoutStatus = async (id: string, status: string) => {
 };
 
 // Generate a simple email template to notify the user
-const generatePayoutEmailTemplate = (userName: string, amount: number, status: string) => {
-    const statusText = status === "completed" ? "successfully completed" : status === "rejected" ? "rejected" : "pending";
-    return `
-      <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
-        <h2 style="color: #4CAF50;">Hello ${userName},</h2>
-        <p>We wanted to inform you that your payout of <strong>$${amount}</strong> has been <strong>${statusText}</strong>.</p>
-        <p>If you have any questions, feel free to contact our support team.</p>
-        <p>Thank you for using our services!</p>
-        <br />
-        <p>Best regards,</p>
-        <p><strong>Hunt Grounds</strong></p>
-        <p style="font-size: 12px; color: #888;">This is an automated email, please do not reply to this message.</p>
-      </div>
-    `;
-};
+// const generatePayoutEmailTemplate = (userName: string, amount: number, status: string) => {
+//     const statusText = status === "completed" ? "successfully completed" : status === "rejected" ? "rejected" : "pending";
+//     return `
+//       <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
+//         <h2 style="color: #4CAF50;">Hello ${userName},</h2>
+//         <p>We wanted to inform you that your payout of <strong>$${amount}</strong> has been <strong>${statusText}</strong>.</p>
+//         <p>If you have any questions, feel free to contact our support team.</p>
+//         <p>Thank you for using our services!</p>
+//         <br />
+//         <p>Best regards,</p>
+//         <p><strong>Hunt Grounds</strong></p>
+//         <p style="font-size: 12px; color: #888;">This is an automated email, please do not reply to this message.</p>
+//       </div>
+//     `;
+// };
 
 
 
