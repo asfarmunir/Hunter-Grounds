@@ -19,8 +19,6 @@ const PayoutFilter = () => {
   // Handler function for filter selection
   const handleFilterChange = (status: string) => {
     setSelectedStatus(status);
-    const currentParams = qs.parse(searchParams.toString());
-
     const queryString = formUrlQuery({
       params: searchParams.toString(),
       key: "status", // Example query key for status

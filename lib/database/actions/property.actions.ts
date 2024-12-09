@@ -3,48 +3,70 @@
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "..";
 import Property from "../property.model";
+import User from "../user.modal";
+
 
 export const getAllProperties = async (
-  { limit, page, propertyName }: { limit: number; page: number; propertyName?: string }
+  { limit, page, ownerName }: { limit: number; page: number; ownerName?: string }
 ) => {
   try {
     await connectToDatabase();
 
-    const skipAmount = (Number(page) - 1) * limit; // Calculate the number of documents to skip
+    const skipAmount = (Number(page) - 1) * limit;
 
-    // Create the base query object for searching properties
-    let query = {};
-    if (propertyName && propertyName.trim()) {
-      query = { name: { $regex: new RegExp(propertyName, "i") } }; // Case-insensitive match for the property name
+    // Base query object
+    let query: any = {};
+
+    // Add ownerName filter if provided
+    if (ownerName && ownerName.trim()) {
+      // Find users with matching ownerName
+      const matchingOwners = await User.find({
+        $or: [
+          { firstname: { $regex: new RegExp(ownerName, 'i') } }, // Case-insensitive search on firstname
+          { lastname: { $regex: new RegExp(ownerName, 'i') } }, // Case-insensitive search on lastname
+        ],
+      }).select('_id'); // Retrieve only the ObjectId of matching owners
+
+      // If matching owners are found, add them to the query
+      if (matchingOwners.length > 0) {
+        query.owner = { $in: matchingOwners.map((owner) => owner._id) };
+      } else {
+        // If no matching owners are found, return no properties
+        return {
+          properties: [],
+          totalProperties: 0,
+          totalPages: 0,
+          status: 200,
+        };
+      }
     }
 
-    // Fetch properties with pagination and optional propertyName filtering
+    // Fetch properties with pagination and filters
     const properties = await Property.find(query)
       .populate({
-        path: 'owner', // The field in Property that references the User model
-        select: 'firstname lastname email', // Specify the fields you want to retrieve from the User model
+        path: 'owner',
+        select: 'firstname lastname email', // Fields to retrieve from the User model
       })
-      .skip(skipAmount) // Skip the documents based on the page
-      .limit(limit) // Limit the number of documents returned
+      .skip(skipAmount)
+      .limit(limit)
       .exec();
 
-    // Count total properties based on the query for pagination
+    // Count total properties for pagination
     const totalProperties = await Property.countDocuments(query).exec();
-    const totalPages = Math.ceil(totalProperties / limit); // Calculate total pages
+    const totalPages = Math.ceil(totalProperties / limit);
 
-    return JSON.parse(
-      JSON.stringify({
-        properties,
-        totalProperties, // Total number of properties available
-        totalPages, // Total pages available
-        status: 200
-      })
-    );
+    return {
+      properties,
+      totalProperties,
+      totalPages,
+      status: 200,
+    };
   } catch (error) {
-    console.error("Error getting all properties", error);
-    return { status: 400, message: "Error getting all properties" };
+    console.error('Error getting all properties:', error);
+    return { status: 400, message: 'Error getting all properties' };
   }
 };
+
 
 
 export const deletePropertyById = async (id:string) => {

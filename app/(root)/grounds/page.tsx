@@ -16,12 +16,12 @@ const page = async ({ searchParams }: SearchParamProps) => {
     redirect("/");
   }
   const page = Number(searchParams?.page) || 1;
-  const propertyName = searchParams?.propertyName || undefined;
+  const ownerName = searchParams?.propertyName || undefined;
 
   const properties = await getAllProperties({
     limit: 8,
     page,
-    propertyName,
+    ownerName,
   });
 
   console.log("🚀 ~ page ~ properties:", properties);

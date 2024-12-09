@@ -153,7 +153,7 @@ const page = ({
 
               {!properties?.length && (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center">
+                  <TableCell colSpan={9} className="text-center">
                     No Data Available
                   </TableCell>
                 </TableRow>

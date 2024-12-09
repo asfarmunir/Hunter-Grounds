@@ -72,21 +72,21 @@ const page = ({
             </TableHeader>
             <TableBody>
               {payout && payout.length > 0 ? (
-                payout.map((payout, i) => (
+                payout.map((p, i) => (
                   <TableRow key={i} className="border-y-4 border-[#000214]">
                     <TableCell className="text-xs text-white border-y-4 border-[#000214] rounded-tl-full rounded-bl-full bg-[#372f2fd4] 2xl:text-sm font-semibold">
-                      {payout._id?.slice(0, 6) ?? "N/A"}
+                      {p._id?.slice(0, 6) ?? "N/A"}
                     </TableCell>
 
                     <TableCell className="bg-[#372f2fd4] capitalize border-y-4 border-[#000214]">
-                      {payout.user?.firstname
-                        ? `${payout.user.firstname} ${payout.user.lastname}`
+                      {p.user?.firstname
+                        ? `${p.user.firstname} ${p.user.lastname}`
                         : "N/A"}
                     </TableCell>
 
                     <TableCell className="bg-[#372f2fd4] border-y-4 border-[#000214]">
-                      {payout.date
-                        ? new Date(payout.date).toLocaleDateString("en-US", {
+                      {p.date
+                        ? new Date(p.date).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "long",
                             day: "numeric",
@@ -95,29 +95,29 @@ const page = ({
                     </TableCell>
 
                     <TableCell className="text-xs text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      {payout.accountEmail ?? "N/A"}
+                      {p.accountEmail ?? "N/A"}
                     </TableCell>
 
                     <TableCell className="text-xs text-center text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      {payout.amount ? `$${payout.amount}` : "N/A"}
+                      {p.amount ? `$${p.amount}` : "N/A"}
                     </TableCell>
 
                     <TableCell className="bg-[#372f2fd4] border-y-4 border-[#000214]">
                       <p
                         className={`${
-                          payout.status === "completed"
+                          p.status === "completed"
                             ? "bg-emerald-600"
-                            : payout.status === "rejected"
+                            : p.status === "rejected"
                             ? "bg-red-500"
                             : "bg-yellow-500"
                         } text-white p-2.5 font-semibold capitalize w-fit rounded-full px-5`}
                       >
-                        {payout.status ?? "N/A"}
+                        {p.status ?? "N/A"}
                       </p>
                     </TableCell>
 
                     <TableCell className="text-xs rounded-tr-full rounded-br-full text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      <CreatePayout payout={payout} />
+                      <CreatePayout payout={p} />
                     </TableCell>
                   </TableRow>
                 ))
@@ -133,7 +133,7 @@ const page = ({
         </div>
         <div className="flex items-center justify-between rounded-full py-4 bg-primary-100 px-6">
           <p className="text-xs font-semibold 2xl:text-sm">
-            {totalPayouts ?? 0} Total payouts
+            {totalPayouts && totalPayouts} Total payouts
           </p>
           <Pagination page={page} totalPages={totalPages} />
         </div>

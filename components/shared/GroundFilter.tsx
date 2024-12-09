@@ -52,7 +52,7 @@ const CustomersFilter = () => {
           text-xs
           focus:border-none
           placeholder-slate-900"
-        placeholder="Search ground..."
+        placeholder="Search by owner..."
         value={searchTerm}
         onChange={handleSearchChange}
       />
