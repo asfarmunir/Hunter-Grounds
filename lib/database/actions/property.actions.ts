@@ -55,12 +55,13 @@ export const getAllProperties = async (
     const totalProperties = await Property.countDocuments(query).exec();
     const totalPages = Math.ceil(totalProperties / limit);
 
-    return {
+    return  JSON.parse(JSON.stringify({
       properties,
       totalProperties,
       totalPages,
       status: 200,
-    };
+    }));
+    
   } catch (error) {
     console.error('Error getting all properties:', error);
     return { status: 400, message: 'Error getting all properties' };
