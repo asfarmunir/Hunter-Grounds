@@ -144,7 +144,7 @@ const page = ({ user, payoutSummary }: { user: IUser; payoutSummary: any }) => {
           <div className=" w-full p-5 2xl:py-10 gap-3 bg-primary-100 rounded-2xl flex flex-col items-center justify-center">
             <div className="w-28 h-28 mb-4 2xl:w-36 2xl:h-36 rounded-full overflow-hidden">
               <Image
-                src={user.profileImage || "/images/avatar.svg"}
+                src={user.profileImage || "/logoIcon.svg"}
                 width={500}
                 height={500}
                 alt="warning"

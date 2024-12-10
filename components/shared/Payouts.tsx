@@ -72,55 +72,57 @@ const page = ({
             </TableHeader>
             <TableBody>
               {payout && payout.length > 0 ? (
-                payout.map((p, i) => (
-                  <TableRow key={i} className="border-y-4 border-[#000214]">
-                    <TableCell className="text-xs text-white border-y-4 border-[#000214] rounded-tl-full rounded-bl-full bg-[#372f2fd4] 2xl:text-sm font-semibold">
-                      {p._id?.slice(0, 6) ?? "N/A"}
-                    </TableCell>
+                payout
+                  .filter((p) => p) // Ensure no null or undefined items are processed
+                  .map((p, i) => (
+                    <TableRow key={i} className="border-y-4 border-[#000214]">
+                      <TableCell className="text-xs text-white border-y-4 border-[#000214] rounded-tl-full rounded-bl-full bg-[#372f2fd4] 2xl:text-sm font-semibold">
+                        {p._id && p._id.slice(0, 8) + "..."}
+                      </TableCell>
 
-                    <TableCell className="bg-[#372f2fd4] capitalize border-y-4 border-[#000214]">
-                      {p.user?.firstname
-                        ? `${p.user.firstname} ${p.user.lastname}`
-                        : "N/A"}
-                    </TableCell>
+                      <TableCell className="bg-[#372f2fd4] capitalize border-y-4 border-[#000214]">
+                        {p.user?.firstname
+                          ? `${p.user.firstname} ${p.user.lastname}`
+                          : "N/A"}
+                      </TableCell>
 
-                    <TableCell className="bg-[#372f2fd4] border-y-4 border-[#000214]">
-                      {p.date
-                        ? new Date(p.date).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })
-                        : "N/A"}
-                    </TableCell>
+                      <TableCell className="bg-[#372f2fd4] border-y-4 border-[#000214]">
+                        {p.date
+                          ? new Date(p.date).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })
+                          : "N/A"}
+                      </TableCell>
 
-                    <TableCell className="text-xs text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      {p.accountEmail ?? "N/A"}
-                    </TableCell>
+                      <TableCell className="text-xs text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
+                        {p.accountEmail ?? "N/A"}
+                      </TableCell>
 
-                    <TableCell className="text-xs text-center text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      {p.amount ? `$${p.amount}` : "N/A"}
-                    </TableCell>
+                      <TableCell className="text-xs text-center text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
+                        {p.amount ? `$${p.amount}` : "N/A"}
+                      </TableCell>
 
-                    <TableCell className="bg-[#372f2fd4] border-y-4 border-[#000214]">
-                      <p
-                        className={`${
-                          p.status === "completed"
-                            ? "bg-emerald-600"
-                            : p.status === "rejected"
-                            ? "bg-red-500"
-                            : "bg-yellow-500"
-                        } text-white p-2.5 font-semibold capitalize w-fit rounded-full px-5`}
-                      >
-                        {p.status ?? "N/A"}
-                      </p>
-                    </TableCell>
+                      <TableCell className="bg-[#372f2fd4] border-y-4 border-[#000214]">
+                        <p
+                          className={`${
+                            p.status === "completed"
+                              ? "bg-emerald-600"
+                              : p.status === "rejected"
+                              ? "bg-red-500"
+                              : "bg-yellow-500"
+                          } text-white p-2.5 font-semibold capitalize w-fit rounded-full px-5`}
+                        >
+                          {p.status ?? "N/A"}
+                        </p>
+                      </TableCell>
 
-                    <TableCell className="text-xs rounded-tr-full rounded-br-full text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      <CreatePayout payout={p} />
-                    </TableCell>
-                  </TableRow>
-                ))
+                      <TableCell className="text-xs rounded-tr-full rounded-br-full text-white bg-[#372f2fd4] border-y-4 border-[#000214] 2xl:text-sm font-semibold">
+                        <CreatePayout payout={p} />
+                      </TableCell>
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center">

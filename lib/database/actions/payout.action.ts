@@ -31,8 +31,11 @@ export const getAllPayouts = async ({ limit , page = 1, status }:{
         const totalPayouts = await Payout.countDocuments(
             query
         );
+        console.log(payouts)
 
-        return JSON.parse(JSON.stringify({ payouts, 
+
+        return JSON.parse(JSON.stringify({ 
+            payouts, 
             totalPayouts,
             totalPages: Math.ceil(totalPayouts / limit),
          }));

@@ -241,7 +241,9 @@ const LatestRegisteredAffiliates = ({
                     <div className=" w-[35px] overflow-hidden rounded-full flex items-center justify-center h-[35px]">
                       <Image
                         src={
-                          item?.profileImage ? item.profileImage : "/avatar.png"
+                          item?.profileImage
+                            ? item.profileImage
+                            : "/logoIcon.svg"
                         }
                         width={50}
                         height={50}
@@ -369,7 +371,9 @@ const LatestCommisions = ({
                     <div className=" w-[35px] overflow-hidden rounded-full flex items-center justify-center h-[35px]">
                       <Image
                         src={
-                          item?.profileImage ? item.profileImage : "/avatar.png"
+                          item?.profileImage
+                            ? item.profileImage
+                            : "/logoIcon.svg"
                         }
                         width={50}
                         height={50}
