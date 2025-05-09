@@ -24,7 +24,6 @@ const page = async ({ searchParams }: SearchParamProps) => {
     ownerName,
   });
 
-  console.log("🚀 ~ page ~ properties:", properties);
   return (
     <Grounds
       properties={properties.properties}

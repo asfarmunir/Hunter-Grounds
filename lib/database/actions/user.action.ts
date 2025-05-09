@@ -6,12 +6,18 @@ import { AnyKeys } from "mongoose";
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-export const getAllUsers = async (
-  { limit, page, name }: { limit: number; page: number, name?: string }
-) => {
+export const getAllUsers = async ({
+  limit,
+  page,
+  name,
+}: {
+  limit: number;
+  page: number;
+  name?: string;
+}) => {
   try {
     await connectToDatabase();
-    
+
     // Pagination logic
     const skipAmount = (Number(page) - 1) * limit;
     const query = name
@@ -19,10 +25,11 @@ export const getAllUsers = async (
           $or: [
             { firstname: { $regex: name, $options: "i" } },
             { lastname: { $regex: name, $options: "i" } },
+            { email: { $regex: name, $options: "i" } },
           ],
         }
       : {};
-    
+
     // Fetch users with pagination
     const users = await User.find(query).skip(skipAmount).limit(limit);
     const totalCount = await User.countDocuments(query);
@@ -37,7 +44,7 @@ export const getAllUsers = async (
       totalUsers: totalCount,
       totalPages: Math.ceil(totalCount / limit),
     };
-  } catch (error:any) {
+  } catch (error: any) {
     console.error("Error getting all users:", error.message || error);
     return {
       status: 400,

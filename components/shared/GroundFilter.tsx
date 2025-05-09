@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { LuSearch } from "react-icons/lu";
 import { useRouter, useSearchParams } from "next/navigation";
-import { formUrlQuery } from "@/lib/utils";
 
 const CustomersFilter = () => {
   const searchParams = useSearchParams();
@@ -17,17 +16,15 @@ const CustomersFilter = () => {
   // Effect to handle the debounced search
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
-      const queryString = formUrlQuery({
-        params: searchParams.toString(),
-        key: "propertyName",
-        value: searchTerm ? searchTerm : null,
-      });
-
-      router.push(queryString, { scroll: false });
+      // Construct URL with only the 'propertyName' parameter
+      const query = searchTerm
+        ? `?propertyName=${encodeURIComponent(searchTerm)}`
+        : "";
+      router.push(`/grounds${query}`, { scroll: false });
     }, debounceDelay);
 
-    return () => clearTimeout(debounceTimer); // Cleanup timeout on component unmount or when searchTerm changes
-  }, [searchTerm, searchParams, router]);
+    return () => clearTimeout(debounceTimer); // Cleanup timeout
+  }, [searchTerm, router]);
 
   // Input change handler
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,23 +32,10 @@ const CustomersFilter = () => {
   };
 
   return (
-    <div
-      className="bg-[#372f2f4b] inline-flex w-full md:w-fit items-center px-2 pl-3.5 rounded-xl   border
-          border-primary-50/40"
-    >
+    <div className="bg-[#372f2f4b] inline-flex w-full md:w-fit items-center px-2 pl-3.5 rounded-xl border border-primary-50/40">
       <LuSearch className="w-4 h-4 text-[#848BAC]" />
       <Input
-        className=" 
-          text-[#848BAC]
-          bg-transparent
-          border-none
-          focus:outline-none
-          w-full
-          md:w-64
-          focus:ring-0
-          text-xs
-          focus:border-none
-          placeholder-slate-900"
+        className="text-[#848BAC] bg-transparent border-none focus:outline-none w-full md:w-64 focus:ring-0 text-xs focus:border-none placeholder-slate-900"
         placeholder="Search by owner..."
         value={searchTerm}
         onChange={handleSearchChange}
